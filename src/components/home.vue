@@ -3,30 +3,14 @@
     <div class="toolbox-title">
       <h1>工具箱</h1>
     </div>
-    <input 
-      v-model="searchQuery" 
-      type="text" 
-      placeholder="搜尋工具..." 
-      class="search-input"
-    />
+    <input v-model="searchQuery" type="text" placeholder="搜尋工具..." class="search-input" />
     <div class="tools-grid">
-      <router-link 
-        v-for="tool in internalTools" 
-        :key="tool.name" 
-        :to="tool.path" 
-        class="tool-link"
-      >
+      <router-link v-for="tool in internalTools" :key="tool.name" :to="tool.path" class="tool-link">
         <div class="tool-button">
           {{ tool.name }}
         </div>
       </router-link>
-      <a 
-        v-for="tool in externalTools" 
-        :key="tool.name"
-        :href="tool.path"
-        target="_blank"
-        class="tool-link"
-      >
+      <a v-for="tool in externalTools" :key="tool.name" :href="tool.path" target="_blank" class="tool-link">
         <div class="tool-button">
           {{ tool.name }}
         </div>
@@ -41,23 +25,23 @@ export default {
   name: 'HomeComponent',
   setup() {
     const searchQuery = ref('');
-    
+
     const tools = [
       { name: 'Blog', path: 'https://blog.qian30.net', isExternal: true },
-      { name: 'clock', path: '/clock' ,isExternal: false}
+      { name: 'clock', path: '/clock', isExternal: false }
     ];
 
-    const filteredTools = computed(() => 
-      tools.filter(tool => 
+    const filteredTools = computed(() =>
+      tools.filter(tool =>
         tool.name.toLowerCase().includes(searchQuery.value.toLowerCase())
       )
     );
 
-    const internalTools = computed(() => 
+    const internalTools = computed(() =>
       filteredTools.value.filter(tool => !tool.isExternal)
     );
 
-    const externalTools = computed(() => 
+    const externalTools = computed(() =>
       filteredTools.value.filter(tool => tool.isExternal)
     );
 
@@ -71,12 +55,25 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 .toolbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
   padding: 20px;
-  max-width: 1200px;
-  margin: auto;
+  margin: 0;
+  background-color: #2d3748;
 }
 
+.tools-grid {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 .toolbox-title {
   text-align: center;
   margin-bottom: 20px;
@@ -84,6 +81,7 @@ export default {
 
 .search-input {
   width: 100%;
+  max-width: 1200px;
   padding: 10px;
   margin-bottom: 20px;
   font-size: 16px;
@@ -133,12 +131,14 @@ export default {
 
   100% {
     background-position: left center;
+    background-color: #2d3748;
   }
 }
 
 @media (min-width: 1024px) {
   .tools-grid {
     grid-template-columns: repeat(5, 1fr);
+
   }
 }
 
