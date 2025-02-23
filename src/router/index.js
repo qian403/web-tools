@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeComponent from '../components/home.vue'
 import DigitalClock from '@/views/DigitalClock.vue'
+import PasswordGenerator from '@/views/password-generator.vue'
 
 const routes = [
   {
@@ -12,7 +13,13 @@ const routes = [
     path: '/clock',
     name: 'Clock',
     component: DigitalClock
+  },
+  {
+    path: '/password-generator',
+    name: 'passwordGenerator',
+    component: PasswordGenerator
   }
+    
 ]
 
 const router = createRouter({

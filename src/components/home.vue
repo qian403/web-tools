@@ -28,7 +28,8 @@ export default {
 
     const tools = [
       { name: 'Blog', path: 'https://blog.qian30.net', isExternal: true },
-      { name: 'clock', path: '/clock', isExternal: false }
+      { name: 'clock', path: '/clock', isExternal: false },
+      { name: 'password-generator',path: '/password-generator',isExternal: false }
     ];
 
     const filteredTools = computed(() =>
@@ -77,6 +78,7 @@ export default {
 .toolbox-title {
   text-align: center;
   margin-bottom: 20px;
+  color: #fff;
 }
 
 .search-input {
