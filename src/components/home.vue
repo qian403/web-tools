@@ -29,7 +29,8 @@ export default {
     const tools = [
       { name: 'Blog', path: 'https://blog.qian30.net', isExternal: true },
       { name: 'Clock', path: '/clock', isExternal: false },
-      { name: 'Password-generator',path: '/password-generator',isExternal: false }
+      { name: 'Password-generator',path: '/password-generator',isExternal: false },
+      { name: 'Text-revealer',path: '/text-revealer',isExternal: false },
     ];
 
     const filteredTools = computed(() =>
