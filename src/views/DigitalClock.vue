@@ -1,7 +1,7 @@
 <!-- Clock.vue -->
 <template>
   <div class="page-container">
-    <div class="back-button" @click="goBack">回到首頁</div>
+    <BackToHome />
     <div class="clock-container">
       <div class="datetime">
         <div class="date">{{ currentDate }}</div>
@@ -13,8 +13,13 @@
 </template>
 
 <script>
+import BackToHome from '@/components/BackToHome.vue'
+
 export default {
   name: 'DigitalClock',
+  components: {
+    BackToHome
+  },
   data() {
     return {
       time: '',
@@ -41,32 +46,12 @@ export default {
         day: '2-digit'
       }).replace(/\//g, '/')
       this.weekday = '星期' + '日一二三四五六'.charAt(now.getDay())
-    },
-    goBack() {
-      this.$router.push('/')
     }
   }
 }
 </script>
 
 <style scoped>
-.back-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 10px 20px;
-  background-color: #4299e1;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  z-index: 10;
-  transition: background-color 0.3s;
-}
-
-.back-button:hover {
-  background-color: #3182ce;
-}
-
 .page-container {
   position: fixed;
   top: 0;

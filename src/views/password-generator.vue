@@ -1,7 +1,7 @@
 <template>
     <div class="page-container">
         <!-- 回到首頁按鈕 -->
-        <div class="back-button" @click="goBack">回到首頁</div>
+        <BackToHome />
 
         <div class="password-generator-container">
             <h2 class="title">隨機密碼產生器</h2>
@@ -50,8 +50,13 @@
 </template>
 
 <script>
+import BackToHome from '@/components/BackToHome.vue'
+
 export default {
     name: 'RandomPasswordGenerator',
+    components: {
+        BackToHome
+    },
     data() {
         return {
             passwordLength: 12,
@@ -62,10 +67,6 @@ export default {
         }
     },
     methods: {
-        goBack() {
-            // 回到首頁
-            this.$router.push('/')
-        },
         generatePassword() {
             let chars = 'abcdefghijklmnopqrstuvwxyz'
 
@@ -111,24 +112,7 @@ export default {
     color: white;
 }
 
-/* 回到首頁按鈕，同 Clock.vue */
-.back-button {
-    position: fixed;
-    top: min(20px, 3vh);
-    left: min(20px, 3vw);
-    padding: min(10px, 1.5vh) min(20px, 3vw);
-    background-color: #4299e1;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    z-index: 10;
-    transition: background-color 0.3s;
-    font-size: min(16px, 2.5vh);
-}
 
-.back-button:hover {
-    background-color: #3182ce;
-}
 
 /* 主要內容容器 */
 .password-generator-container {

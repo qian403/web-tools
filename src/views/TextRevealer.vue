@@ -1,6 +1,6 @@
 <template>
     <div class="page-container" ref="containerRef">
-        <div class="back-button" @click="goBack">返回首頁</div> <!-- 返回首頁按鈕 -->
+        <BackToHome>返回首頁</BackToHome> <!-- 返回首頁按鈕 -->
 
         <!-- 可編輯文字區 -->
         <div class="editor" contenteditable="true" ref="editorRef" @input="onInput"
@@ -12,13 +12,7 @@
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
-
-
-const router = useRouter()
-function goBack() {
-    router.push('/')
-}
+import BackToHome from '@/components/BackToHome.vue'
 
 // DOM 參考
 const containerRef = ref(null)
@@ -82,7 +76,6 @@ function fitsInContainer() {
 </script>
 
 <style scoped>
-
 .page-container {
     position: fixed;
     inset: 0;
@@ -94,23 +87,7 @@ function fitsInContainer() {
     overflow: hidden;
 }
 
-/* 返回首頁按鈕 */
-.back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    padding: 10px 20px;
-    background-color: #4299e1;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    z-index: 10;
-    transition: background-color 0.3s;
-}
 
-.back-button:hover {
-    background-color: #3182ce;
-}
 
 .editor {
     width: 100%;

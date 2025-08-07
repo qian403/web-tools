@@ -1,15 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeComponent from '../components/home.vue'
-
+import Home from '@/views/Home.vue'
 
 import DigitalClock from '@/views/DigitalClock.vue'
 import PasswordGenerator from '@/views/password-generator.vue'
 import TextRevealer from '@/views/TextRevealer.vue'
+import DiceGame from '@/views/DiceGame.vue'
+
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomeComponent
+    component: Home
   },
   {
     path: '/clock',
@@ -25,6 +26,11 @@ const routes = [
     path: '/text-revealer',
     name: 'TextRevealer',
     component: TextRevealer
+  },
+  {
+    path: '/dice-game',
+    name: 'DiceGame',
+    component: DiceGame
   }
     
 ]
