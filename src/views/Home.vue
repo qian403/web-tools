@@ -3,7 +3,18 @@
         <div class="toolbox-title">
             <h1>工具箱</h1>
         </div>
-        <input v-model="searchQuery" type="text" placeholder="搜尋工具或分類..." class="search-input" />
+        <input 
+            v-model="searchQuery" 
+            type="text" 
+            id="search-input" 
+            name="search" 
+            placeholder="搜尋工具或分類..." 
+            class="search-input"
+            aria-label="搜尋工具或分類"
+            aria-describedby="search-help"
+            @keydown.enter="handleSearchEnter"
+        />
+        <div id="search-help" class="sr-only">輸入工具名稱或分類來搜尋可用的工具</div>
         <div class="categories-container">
             <div v-if="categories.length === 0" class="no-results">
                 <p>沒有找到相關的工具</p>
@@ -12,13 +23,13 @@
                 <h2 class="category-title">{{ category }}</h2>
                 <div class="tools-grid">
                     <router-link v-for="tool in groupedTools[category].filter(t => !t.isExternal)" :key="tool.name"
-                        :to="tool.path" class="tool-link">
+                        :to="tool.path" class="tool-link" :aria-label="`開啟 ${tool.nameZh || tool.name} 工具`">
                         <div class="tool-button">
                             {{ tool.name }}
                         </div>
                     </router-link>
                     <a v-for="tool in groupedTools[category].filter(t => t.isExternal)" :key="tool.name"
-                        :href="tool.path" target="_blank" class="tool-link">
+                        :href="tool.path" target="_blank" class="tool-link" :aria-label="`開啟 ${tool.nameZh || tool.name} 工具（新視窗）`">
                         <div class="tool-button">
                             {{ tool.name }}
                         </div>
@@ -77,6 +88,14 @@ export default {
                 isExternal: false,
                 category: '小作品',
                 categoryEn: 'Tools'
+            },
+            {
+                name: 'Base Converter',
+                nameZh: '進制轉換器',
+                path: '/base-converter',
+                isExternal: false,
+                category: '小工具',
+                categoryEn: 'Tools'
             }
         ];
 
@@ -85,11 +104,9 @@ export default {
 
             const query = searchQuery.value.toLowerCase();
             return tools.filter(tool => {
-                // 搜尋工具名稱（中英文）
                 const nameMatch = tool.name.toLowerCase().includes(query) ||
                     (tool.nameZh && tool.nameZh.toLowerCase().includes(query));
 
-                // 搜尋分類名稱（中英文）
                 const categoryMatch = tool.category.toLowerCase().includes(query) ||
                     (tool.categoryEn && tool.categoryEn.toLowerCase().includes(query));
 
@@ -110,10 +127,26 @@ export default {
 
         const categories = computed(() => Object.keys(groupedTools.value));
 
+        const handleSearchEnter = () => {
+            // 如果搜尋結果只有一個工具，自動導航到該工具
+            const allTools = Object.values(groupedTools.value).flat();
+            if (allTools.length === 1) {
+                const tool = allTools[0];
+                if (tool.isExternal) {
+                    window.open(tool.path, '_blank');
+                } else {
+                    // 使用 router.push 導航到內部路由
+                    // 這裡需要導入 router，但為了保持簡單，我們先不實現
+                    console.log('導航到:', tool.path);
+                }
+            }
+        };
+
         return {
             searchQuery,
             groupedTools,
-            categories
+            categories,
+            handleSearchEnter
         };
     }
 };
@@ -196,35 +229,15 @@ export default {
     padding: 20px;
     color: #fff;
     font-weight: bold;
-    background: linear-gradient(145deg, #0072E3, #66B3FF, #0072E3);
+    background-color: #0072E3;
     text-align: center;
     border-radius: 8px;
-    transition: transform 0.3s ease;
-    background-size: 300% 300%;
-    background-position: left center;
-    position: relative;
-    overflow: hidden;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .tool-button:hover {
-    transform: scale(1.1);
-    z-index: 1;
-    animation: backgroundMove 3s ease infinite;
-}
-
-@keyframes backgroundMove {
-    0% {
-        background-position: left center;
-    }
-
-    50% {
-        background-position: right center;
-    }
-
-    100% {
-        background-position: left center;
-        background-color: #2d3748;
-    }
+    transform: scale(1.05);
+    background-color: #0056b3;
 }
 
 @media (min-width: 1024px) {

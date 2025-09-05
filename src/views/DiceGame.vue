@@ -65,10 +65,15 @@
 
 
 
-            <button class="bet-button" @click="placeBet" :disabled="isRolling" :class="{ rolling: isRolling }">
+            <Button 
+                variant="primary" 
+                size="large" 
+                :disabled="isRolling" 
+                @click="placeBet"
+            >
                 <span v-if="!isRolling">開始投注</span>
                 <span v-else class="rolling-text">投注中...</span>
-            </button>
+            </Button>
         </div>
     </div>
 </template>
@@ -76,11 +81,13 @@
 <script>
 import { ref, computed, onMounted, onUnmounted, nextTick, shallowRef } from 'vue';
 import BackToHome from '@/components/BackToHome.vue';
+import Button from '@/components/Button.vue';
 
 export default {
     name: 'DiceGame',
     components: {
-        BackToHome
+        BackToHome,
+        Button
     },
     setup() {
     
@@ -687,50 +694,8 @@ export default {
     color: white;
 }
 
-.bet-button {
-    background: linear-gradient(135deg, #4299e1, #3182ce);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    margin-bottom: 1rem;
-    min-width: 150px;
-    position: relative;
-    overflow: hidden;
-}
-
-.bet-button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(66, 153, 225, 0.3);
-}
-
-.bet-button:active:not(:disabled) {
-    transform: translateY(0);
-}
-
-.bet-button.rolling {
-    background: linear-gradient(135deg, #48bb78, #38a169);
-    animation: rolling-pulse 1s infinite;
-}
-
 .rolling-text {
     animation: rolling-text 1s infinite;
-}
-
-@keyframes rolling-pulse {
-
-    0%,
-    100% {
-        box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.7);
-    }
-
-    50% {
-        box-shadow: 0 0 0 10px rgba(72, 187, 120, 0);
-    }
 }
 
 @keyframes rolling-text {
@@ -743,13 +708,6 @@ export default {
     50% {
         opacity: 0.7;
     }
-}
-
-.bet-button:disabled {
-    background: #4a5568;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
 }
 
 /* 響應式設計 */

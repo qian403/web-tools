@@ -3,47 +3,78 @@
         <!-- 回到首頁按鈕 -->
         <BackToHome />
 
-        <div class="password-generator-container">
-            <h2 class="title">隨機密碼產生器</h2>
+        <div class="tool-container">
+            <h2 class="tool-title">隨機密碼產生器</h2>
 
             <!-- 密碼長度滑桿 -->
-            <div class="slider-container">
-                <label for="length">密碼長度：{{ passwordLength }}</label>
-                <input type="range" id="length" v-model="passwordLength" min="1" max="64" />
+            <div class="form-group">
+                <label for="length" class="form-label">密碼長度：{{ passwordLength }}</label>
+                <input 
+                    type="range" 
+                    id="length" 
+                    name="passwordLength"
+                    v-model="passwordLength" 
+                    min="1" 
+                    max="64" 
+                    aria-label="密碼長度滑桿"
+                    aria-valuemin="1"
+                    aria-valuemax="64"
+                    :aria-valuenow="passwordLength"
+                />
             </div>
 
             <!-- iOS 風格開關 -->
             <div class="switch-container">
                 <div class="switch-item">
-                    <label>包含大寫字母</label>
+                    <label for="include-uppercase">包含大寫字母</label>
                     <label class="switch">
-                        <input type="checkbox" v-model="includeUppercase" />
+                        <input 
+                            type="checkbox" 
+                            id="include-uppercase" 
+                            name="includeUppercase" 
+                            v-model="includeUppercase"
+                            aria-describedby="uppercase-desc"
+                        />
                         <span class="slider round"></span>
                     </label>
                 </div>
 
                 <div class="switch-item">
-                    <label>包含數字</label>
+                    <label for="include-numbers">包含數字</label>
                     <label class="switch">
-                        <input type="checkbox" v-model="includeNumbers" />
+                        <input 
+                            type="checkbox" 
+                            id="include-numbers" 
+                            name="includeNumbers" 
+                            v-model="includeNumbers"
+                            aria-describedby="numbers-desc"
+                        />
                         <span class="slider round"></span>
                     </label>
                 </div>
 
                 <div class="switch-item">
-                    <label>包含特殊符號</label>
+                    <label for="include-symbols">包含特殊符號</label>
                     <label class="switch">
-                        <input type="checkbox" v-model="includeSymbols" />
+                        <input 
+                            type="checkbox" 
+                            id="include-symbols" 
+                            name="includeSymbols" 
+                            v-model="includeSymbols"
+                            aria-describedby="symbols-desc"
+                        />
                         <span class="slider round"></span>
                     </label>
                 </div>
             </div>
 
             <!-- 產生密碼 & 顯示結果 -->
-            <button class="generate-btn" @click="generatePassword">產生密碼</button>
+            <div class="button-container">
+                <Button variant="primary" @click="generatePassword" aria-label="產生隨機密碼">產生密碼</Button>
+            </div>
             <div v-if="generatedPassword" class="result">
                 <p>產生的密碼：<strong>{{ generatedPassword }}</strong></p>
-                <button class="copy-btn" @click="copyToClipboard">複製密碼</button>
+                <Button variant="success" size="small" @click="copyToClipboard" aria-label="複製密碼到剪貼簿">複製密碼</Button>
             </div>
         </div>
     </div>
@@ -51,11 +82,13 @@
 
 <script>
 import BackToHome from '@/components/BackToHome.vue'
+import Button from '@/components/Button.vue'
 
 export default {
     name: 'RandomPasswordGenerator',
     components: {
-        BackToHome
+        BackToHome,
+        Button
     },
     data() {
         return {
@@ -90,58 +123,61 @@ export default {
             if (!this.generatedPassword) return
             navigator.clipboard.writeText(this.generatedPassword)
                 .then(() => {
-                    alert('已複製到剪貼簿！')
+                    this.showToast('已複製到剪貼簿！', 'success')
                 })
-                .catch(err => {
-                    alert('複製失敗：' + err)
+                .catch(() => {
+                    this.showToast('複製失敗，請手動複製', 'error')
                 })
+        },
+        showToast(message, type = 'info') {
+            
+
+
+            const toast = document.createElement('div')
+            toast.className = `toast toast-${type}`
+            toast.textContent = message
+            
+            Object.assign(toast.style, {
+                position: 'fixed',
+                top: '20px',
+                right: '20px',
+                padding: '12px 20px',
+                borderRadius: '8px',
+                color: 'white',
+                fontWeight: 'bold',
+                zIndex: '9999',
+                opacity: '0',
+                transform: 'translateX(100%)',
+                transition: 'all 0.3s ease',
+                backgroundColor: type === 'success' ? '#4caf50' : type === 'error' ? '#e53e3e' : '#4299e1'
+            })
+            
+            document.body.appendChild(toast)
+            
+            setTimeout(() => {
+                toast.style.opacity = '1'
+                toast.style.transform = 'translateX(0)'
+            }, 100)
+            
+            setTimeout(() => {
+                toast.style.opacity = '0'
+                toast.style.transform = 'translateX(100%)'
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast)
+                    }
+                }, 300)
+            }, 3000)
         }
     }
 }
 </script>
 
 <style scoped>
-/* 與 Clock.vue 相同的背景、佈局風格 */
-.page-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #2d3748;
-    color: white;
-}
 
-
-
-/* 主要內容容器 */
-.password-generator-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding: 0 20px;
-}
-
-.title {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-/* 密碼長度滑桿區域 */
-.slider-container {
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.slider-container label {
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-.slider-container input[type="range"] {
+input[type="range"] {
     width: 200px;
+    margin-top: var(--spacing-sm);
 }
 
 /* iOS 風格開關容器 */
@@ -208,43 +244,16 @@ export default {
     transform: translateX(16px);
 }
 
-/* 產生密碼按鈕 */
-.generate-btn {
-    background-color: #4299e1;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    font-size: 1rem;
-    transition: background-color 0.3s;
-    margin-bottom: 1rem;
-}
-
-.generate-btn:hover {
-    background-color: #3182ce;
+.button-container {
+    margin-bottom: 2rem;
 }
 
 /* 密碼結果顯示區 */
 .result {
     text-align: center;
-    background-color: #1a202c;
-    padding: 1rem;
-    border-radius: 8px;
-}
-
-.copy-btn {
-    background-color: #4caf50;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    font-size: 1rem;
-    margin-top: 0.5rem;
-}
-
-.copy-btn:hover {
-    background-color: #43a047;
+    background-color: var(--secondary-bg);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    margin-top: var(--spacing-lg);
 }
 </style>

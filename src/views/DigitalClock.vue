@@ -61,15 +61,6 @@ export default {
   background-color: #2d3748;
 }
 
-.page-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #2d3748;
-}
-
 .clock-container {
   height: 100%;
   width: 100%;
@@ -89,13 +80,5 @@ export default {
 .weekday {
   font-size: min(5vw, 4vh);
   margin-bottom: min(3vw, 2vh);
-}
-
-.back-button {
-  position: fixed;
-  top: min(20px, 3vh);
-  left: min(20px, 3vw);
-  padding: min(10px, 1.5vh) min(20px, 3vw);
-  font-size: min(16px, 2.5vh);
 }
 </style>

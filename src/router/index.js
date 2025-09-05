@@ -5,6 +5,7 @@ import DigitalClock from '@/views/DigitalClock.vue'
 import PasswordGenerator from '@/views/password-generator.vue'
 import TextRevealer from '@/views/TextRevealer.vue'
 import DiceGame from '@/views/DiceGame.vue'
+import BaseConverter from '@/views/BaseConverter.vue'
 
 const routes = [
   {
@@ -31,8 +32,12 @@ const routes = [
     path: '/dice-game',
     name: 'DiceGame',
     component: DiceGame
+  },
+  {
+    path: '/base-converter',
+    name: 'BaseConverter',
+    component: BaseConverter
   }
-    
 ]
 
 const router = createRouter({
