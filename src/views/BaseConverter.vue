@@ -105,7 +105,7 @@
 
                 <div class="mobile-result-section">
                     <div class="mobile-result-container">
-                        <div class="mobile-result-value">{{ rightValue }}</div>
+                        <div class="mobile-result-value">{{ rightValue || '&nbsp;' }}</div>
                     </div>
                 </div>
             </div>
@@ -120,6 +120,37 @@
 <script>
 import BackToHome from '@/components/BackToHome.vue'
 
+const BASE_OPTIONS = [
+    { value: 10, label: '十進位' },
+    { value: 16, label: '十六進位' },
+    { value: 8, label: '八進位' },
+    { value: 2, label: '二進位' }
+]
+
+const ERROR_MESSAGES = {
+    INVALID_FORMAT: '請輸入有效的數值格式',
+    VALUE_TOO_LARGE: '數值過大，請輸入較小的數值',
+    LENGTH_EXCEEDED: '輸入長度超過限制',
+    BINARY_INVALID: '二進制只能包含 0 和 1',
+    OCTAL_INVALID: '八進制只能包含 0-7',
+    DECIMAL_INVALID: '十進制只能包含數字',
+    HEX_INVALID: '十六進制只能包含 0-9 和 A-F'
+}
+
+const VALIDATION_PATTERNS = {
+    2: /^[01]+$/,
+    8: /^[0-7]+$/,
+    10: /^\d+$/,
+    16: /^[0-9A-F]+$/
+}
+
+const PLACEHOLDERS = {
+    2: '例如：1010',
+    8: '例如：777',
+    10: '例如：255',
+    16: '例如：FF'
+}
+
 export default {
     name: 'BaseConverter',
     components: {
@@ -133,84 +164,110 @@ export default {
             rightBase: 10,
             errorMessage: '',
             debounceTimer: null,
-            maxInputLength: 20, 
-            baseOptions: [
-                { value: 10, label: '十進位' },
-                { value: 16, label: '十六進位' },
-                { value: 8, label: '八進位' },
-                { value: 2, label: '二進位' }
-            ]
+            debouncedConversion: null,
+            maxInputLength: 20,
+            baseOptions: BASE_OPTIONS
+        }
+    },
+    computed: {
+        convertedValue() {
+            if (!this.leftValue.trim()) return ''
+            
+            try {
+                const decimal = this.parseToDecimal(this.leftValue, this.leftBase)
+                if (isNaN(decimal) || decimal > Number.MAX_SAFE_INTEGER) {
+                    return ''
+                }
+                return this.convertFromDecimal(decimal, this.rightBase)
+            } catch {
+                return ''
+            }
+        },
+        
+        availableBases() {
+            return this.baseOptions
         }
     },
     methods: {
         getPlaceholder(base) {
-            const placeholders = {
-                2: '例如：1010',
-                8: '例如：777',
-                10: '例如：255',
-                16: '例如：FF'
-            }
-            return placeholders[base] || '輸入數值'
+            return PLACEHOLDERS[base] || '輸入數值'
         },
 
+        // 修復：添加回 getAvailableBases 方法
+        getAvailableBases() {
+            return this.baseOptions
+        },
 
+        
+        setBase(side, base) {
+            this[`${side}Base`] = base
+            const otherSide = side === 'left' ? 'right' : 'left'
+            if (this[`${otherSide}Base`] === base) {
+                this[`${otherSide}Base`] = this.getAlternativeBase(base)
+            }
+            this.updateConversion()
+        },
 
         setLeftBase(base) {
-            this.leftBase = base
-            if (this.rightBase === base) {
-                this.rightBase = this.getAlternativeBase(base)
-            }
-            this.convertCurrentValue()
+            this.setBase('left', base)
         },
-
 
         setRightBase(base) {
-            this.rightBase = base
-            if (this.leftBase === base) {
-                this.leftBase = this.getAlternativeBase(base)
-            }
-            this.convertCurrentValue()
+            this.setBase('right', base)
         },
-
-
 
         getAlternativeBase(currentBase) {
             const alternatives = this.baseOptions.filter(option => option.value !== currentBase)
             return alternatives[0].value
         },
 
-        getAvailableBases(side) {
-            if (side === 'left') {
-                return this.baseOptions.filter(option => option.value !== this.rightBase)
-            } else {
-                return this.baseOptions.filter(option => option.value !== this.leftBase)
+        handleBaseChange(side) {
+            const otherSide = side === 'left' ? 'right' : 'left'
+            if (this[`${side}Base`] === this[`${otherSide}Base`]) {
+                this[`${otherSide}Base`] = this.getAlternativeBase(this[`${side}Base`])
             }
+            this.updateConversion()
         },
 
         handleLeftBaseChange() {
-            if (this.leftBase === this.rightBase) {
-                this.rightBase = this.getAlternativeBase(this.leftBase)
-            }
-            this.convertFromLeft()
+            this.handleBaseChange('left')
         },
 
         handleRightBaseChange() {
-            if (this.rightBase === this.leftBase) {
-                this.leftBase = this.getAlternativeBase(this.rightBase)
-            }
-            this.convertFromLeft()
+            this.handleBaseChange('right')
         },
 
+
+        initDebouncedConversion() {
+            if (!this.debouncedConversion) {
+                this.debouncedConversion = this.debounce((direction) => {
+                    this.performConversion(direction)
+                }, 300)
+            }
+        },
+
+        debounce(func, wait) {
+            let timeout
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout)
+                    func(...args)
+                }
+                clearTimeout(timeout)
+                timeout = setTimeout(later, wait)
+            }
+        },
 
         convertFromLeft() {
-            if (this.debounceTimer) {
-                clearTimeout(this.debounceTimer)
-            }
-            
-            this.debounceTimer = setTimeout(() => {
-                this.performConversion('left')
-            }, 300)
+            this.initDebouncedConversion()
+            this.debouncedConversion('left')
         },
+
+        convertFromRight() {
+            this.initDebouncedConversion()
+            this.debouncedConversion('right')
+        },
+
 
         performConversion(direction) {
             this.errorMessage = ''
@@ -220,21 +277,13 @@ export default {
             const targetBase = direction === 'left' ? this.rightBase : this.leftBase
             
             if (!inputValue) {
-                if (direction === 'left') {
-                    this.rightValue = ''
-                } else {
-                    this.leftValue = ''
-                }
+                this.clearTargetValue(direction)
                 return
             }
 
             if (inputValue.length > this.maxInputLength) {
-                this.errorMessage = '輸入長度超過限制'
-                if (direction === 'left') {
-                    this.rightValue = ''
-                } else {
-                    this.leftValue = ''
-                }
+                this.errorMessage = ERROR_MESSAGES.LENGTH_EXCEEDED
+                this.clearTargetValue(direction)
                 return
             }
 
@@ -242,87 +291,90 @@ export default {
                 const decimalValue = this.parseToDecimal(inputValue, inputBase)
                 
                 if (isNaN(decimalValue)) {
-                    throw new Error('無效的數值格式')
+                    throw new Error(ERROR_MESSAGES.INVALID_FORMAT)
                 }
 
                 if (decimalValue > Number.MAX_SAFE_INTEGER) {
-                    throw new Error('數值過大')
+                    throw new Error(ERROR_MESSAGES.VALUE_TOO_LARGE)
                 }
 
                 const result = this.convertFromDecimal(decimalValue, targetBase)
+                this.setTargetValue(direction, result)
                 
-                if (direction === 'left') {
-                    this.rightValue = result
-                } else {
-                    this.leftValue = result
-                }
             } catch (error) {
-                let errorMsg = '轉換失敗'
-                if (error.message.includes('無效的數值格式')) {
-                    errorMsg = '請輸入有效的數值格式'
-                } else if (error.message.includes('數值過大')) {
-                    errorMsg = '數值過大，請輸入較小的數值'
-                } else if (error.message.includes('輸入長度超過限制')) {
-                    errorMsg = '輸入長度超過限制'
-                } else if (error.message.includes('二進制')) {
-                    errorMsg = '二進制只能包含 0 和 1'
-                } else if (error.message.includes('八進制')) {
-                    errorMsg = '八進制只能包含 0-7'
-                } else if (error.message.includes('十進制')) {
-                    errorMsg = '十進制只能包含數字'
-                } else if (error.message.includes('十六進制')) {
-                    errorMsg = '十六進制只能包含 0-9 和 A-F'
-                }
-                
-                this.errorMessage = errorMsg
-                if (direction === 'left') {
-                    this.rightValue = ''
-                } else {
-                    this.leftValue = ''
-                }
+                this.handleConversionError(error, direction)
             }
         },
 
-        convertFromRight() {
-            if (this.debounceTimer) {
-                clearTimeout(this.debounceTimer)
+        clearTargetValue(direction) {
+            if (direction === 'left') {
+                this.rightValue = ''
+            } else {
+                this.leftValue = ''
+            }
+        },
+
+        setTargetValue(direction, value) {
+            if (direction === 'left') {
+                this.rightValue = value
+            } else {
+                this.leftValue = value
+            }
+        },
+
+
+
+        handleConversionError(error, direction) {
+            let errorMsg = ERROR_MESSAGES.INVALID_FORMAT
+            
+            if (error.message.includes('二進制')) {
+                errorMsg = ERROR_MESSAGES.BINARY_INVALID
+            } else if (error.message.includes('八進制')) {
+                errorMsg = ERROR_MESSAGES.OCTAL_INVALID
+            } else if (error.message.includes('十進制')) {
+                errorMsg = ERROR_MESSAGES.DECIMAL_INVALID
+            } else if (error.message.includes('十六進制')) {
+                errorMsg = ERROR_MESSAGES.HEX_INVALID
+            } else if (error.message.includes(ERROR_MESSAGES.VALUE_TOO_LARGE)) {
+                errorMsg = ERROR_MESSAGES.VALUE_TOO_LARGE
             }
             
-
-            this.debounceTimer = setTimeout(() => {
-                this.performConversion('right')
-            }, 300)
+            this.errorMessage = errorMsg
+            this.clearTargetValue(direction)
         },
 
-        convertCurrentValue() {
-            if (this.leftValue.trim() && !this.rightValue.trim()) {
-                this.performConversion('left')
-            } else if (this.rightValue.trim() && !this.leftValue.trim()) {
-                this.performConversion('right')
-            } else if (this.leftValue.trim() && this.rightValue.trim()) {
-                this.performConversion('left')
+        updateConversion() {
+            if (this.leftValue.trim()) {
+                this.convertFromLeft()
+            } else if (this.rightValue.trim()) {
+                this.convertFromRight()
             }
         },
 
         parseToDecimal(value, fromBase) {
             let cleanValue = value.toUpperCase()
             
-            if (fromBase === 16 && cleanValue.startsWith('0X')) {
-                cleanValue = cleanValue.substring(2)
-            } else if (fromBase === 2 && cleanValue.startsWith('0B')) {
-                cleanValue = cleanValue.substring(2)
-            } else if (fromBase === 8 && cleanValue.startsWith('0O')) {
+            const prefixes = {
+                16: '0X',
+                2: '0B',
+                8: '0O'
+            }
+            
+            if (prefixes[fromBase] && cleanValue.startsWith(prefixes[fromBase])) {
                 cleanValue = cleanValue.substring(2)
             }
 
-            if (fromBase === 2 && !/^[01]+$/.test(cleanValue)) {
-                throw new Error('二進制只能包含 0 和 1')
-            } else if (fromBase === 8 && !/^[0-7]+$/.test(cleanValue)) {
-                throw new Error('八進制只能包含 0-7')
-            } else if (fromBase === 10 && !/^\d+$/.test(cleanValue)) {
-                throw new Error('十進制只能包含數字')
-            } else if (fromBase === 16 && !/^[0-9A-F]+$/.test(cleanValue)) {
-                throw new Error('十六進制只能包含 0-9 和 A-F')
+
+
+            const pattern = VALIDATION_PATTERNS[fromBase]
+            if (!pattern.test(cleanValue)) {
+                const errorMessages = {
+                    2: ERROR_MESSAGES.BINARY_INVALID,
+                    8: ERROR_MESSAGES.OCTAL_INVALID,
+                    10: ERROR_MESSAGES.DECIMAL_INVALID,
+                    16: ERROR_MESSAGES.HEX_INVALID
+                }
+                throw new Error(errorMessages[fromBase])
             }
 
             return parseInt(cleanValue, fromBase)
@@ -347,22 +399,38 @@ export default {
             return result
         }
     },
+    mounted() {
+        this.initDebouncedConversion()
+    },
+    
     beforeUnmount() {
         if (this.debounceTimer) {
             clearTimeout(this.debounceTimer)
         }
+        this.debouncedConversion = null
     }
 }
 </script>
 
 <style scoped>
 .page-container {
+    --primary-color: #4299e1;
+    --bg-dark: #1a202c;
+    --bg-darker: #2d3748;
+    --bg-light: #4a5568;
+    --text-light: #e2e8f0;
+    --text-muted: #a0aec0;
+    --text-placeholder: #718096;
+    --error-color: #e53e3e;
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+    
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #2d3748;
+    background-color: var(--bg-darker);
     color: white;
     overflow: hidden;
 }
@@ -387,7 +455,7 @@ export default {
 .title {
     font-size: 2rem;
     margin-bottom: 0.5rem;
-    color: #e2e8f0;
+    color: var(--text-light);
 }
 
 
@@ -409,8 +477,8 @@ export default {
 
 .base-tabs {
     display: flex;
-    background-color: #1a202c;
-    border-radius: 8px;
+    background-color: var(--bg-dark);
+    border-radius: var(--border-radius);
     padding: 4px;
     gap: 4px;
 }
@@ -422,19 +490,19 @@ export default {
     cursor: pointer;
     border-radius: 6px;
     font-size: 0.9rem;
-    color: #a0aec0;
-    transition: all 0.3s ease;
+    color: var(--text-muted);
+    transition: var(--transition);
     user-select: none;
 }
 
 .tab:hover {
-    color: #e2e8f0;
-    background-color: #2d3748;
+    color: var(--text-light);
+    background-color: var(--bg-darker);
 }
 
 .tab.active {
     color: white;
-    background-color: #4299e1;
+    background-color: var(--primary-color);
     font-weight: bold;
 }
 
@@ -445,23 +513,25 @@ export default {
 .conversion-input {
     width: 100%;
     padding: 16px;
-    border: 2px solid #4a5568;
-    border-radius: 8px;
-    background-color: #1a202c;
+    border: 2px solid var(--bg-light);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-dark);
     color: white;
     font-size: 1.2rem;
     font-family: 'Courier New', monospace;
     transition: border-color 0.3s;
     box-sizing: border-box;
+    min-height: 60px;
+    line-height: 1.4;
 }
 
 .conversion-input:focus {
     outline: none;
-    border-color: #4299e1;
+    border-color: var(--primary-color);
 }
 
 .conversion-input::placeholder {
-    color: #718096;
+    color: var(--text-placeholder);
     font-family: inherit;
 }
 
@@ -475,23 +545,23 @@ export default {
 
 .arrow {
     font-size: 2rem;
-    color: #4299e1;
+    color: var(--primary-color);
     font-weight: bold;
     user-select: none;
 }
 
 .error-message {
-    background-color: #e53e3e;
+    background-color: var(--error-color);
     color: white;
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     text-align: center;
     margin-top: 1rem;
     max-width: 600px;
     font-size: 0.9rem;
 }
 
-/* 桌面端和移動端顯示控制 */
+
 .desktop-only {
     display: flex;
 }
@@ -554,9 +624,9 @@ export default {
     .base-select {
         width: 100%;
         padding: 12px;
-        border: 2px solid #4a5568;
-        border-radius: 8px;
-        background-color: #1a202c;
+        border: 2px solid var(--bg-light);
+        border-radius: var(--border-radius);
+        background-color: var(--bg-dark);
         color: white;
         font-size: 1rem;
         cursor: pointer;
@@ -565,11 +635,10 @@ export default {
     
     .base-select:focus {
         outline: none;
-        border-color: #4299e1;
+        border-color: var(--primary-color);
     }
     
     
-    /* 輸入和結果區域 */
     .mobile-input-section,
     .mobile-result-section {
         width: 100%;
@@ -584,34 +653,37 @@ export default {
     .mobile-conversion-input {
         width: 100%;
         padding: 16px;
-        border: 2px solid #4a5568;
-        border-radius: 8px;
-        background-color: #1a202c;
+        border: 2px solid var(--bg-light);
+        border-radius: var(--border-radius);
+        background-color: var(--bg-dark);
         color: white;
         font-size: 1.2rem;
         font-family: 'Courier New', monospace;
         box-sizing: border-box;
-        min-height: 50px;
+        height: 60px;
+        line-height: 1.4;
     }
     
     .mobile-conversion-input:focus {
         outline: none;
-        border-color: #4299e1;
+        border-color: var(--primary-color);
     }
     
     .mobile-conversion-input::placeholder {
-        color: #718096;
+        color: var(--text-placeholder);
         font-family: inherit;
     }
     
     .mobile-result-container {
         padding: 16px;
-        border: 2px solid #4a5568;
-        border-radius: 8px;
-        background-color: #2d3748;
-        min-height: 50px;
+        border: 2px solid var(--bg-light);
+        border-radius: var(--border-radius);
+        background-color: var(--bg-darker);
+        height: 60px;
         display: flex;
         align-items: center;
+        line-height: 1.4;
+        box-sizing: border-box;
     }
     
     .mobile-result-value {
@@ -640,15 +712,15 @@ export default {
     }
     
     .mobile-conversion-input {
-        font-size: 16px; /* 防止 iOS 縮放 */
+        font-size: 16px; 
         padding: 14px;
-        min-height: 48px;
+        height: 60px;
     }
     
     .base-select {
         font-size: 16px; /* 防止 iOS 縮放 */
         padding: 12px;
-        min-height: 44px; /* iOS 推薦的最小觸控區域 */
+        min-height: 44px; 
     }
     
     .mobile-result-value {
@@ -671,6 +743,7 @@ export default {
     .mobile-conversion-input {
         padding: 12px;
         font-size: 15px;
+        height: 60px;
     }
     
     .base-select {
