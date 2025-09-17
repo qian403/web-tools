@@ -21,8 +21,7 @@
                         </div>
                     </div>
                     <div class="input-container">
-                        <input 
-                            type="text" 
+                        <textarea 
                             id="desktop-left-input"
                             name="desktop-left-input"
                             v-model="leftValue" 
@@ -30,7 +29,10 @@
                             @input="convertFromLeft"
                             :maxlength="maxInputLength"
                             class="conversion-input"
-                        />
+                            rows="3"
+                            spellcheck="false"
+                            ref="leftTextarea"
+                        ></textarea>
                     </div>
                 </div>
 
@@ -50,8 +52,7 @@
                         </div>
                     </div>
                     <div class="input-container">
-                        <input 
-                            type="text" 
+                        <textarea 
                             id="desktop-right-input"
                             name="desktop-right-input"
                             v-model="rightValue" 
@@ -59,7 +60,10 @@
                             @input="convertFromRight"
                             :maxlength="maxInputLength"
                             class="conversion-input"
-                        />
+                            rows="3"
+                            spellcheck="false"
+                            ref="rightTextarea"
+                        ></textarea>
                     </div>
                 </div>
             </div>
@@ -88,8 +92,7 @@
                 
                 <div class="mobile-input-section">
                     <div class="mobile-input-container">
-                        <input 
-                            type="text" 
+                        <textarea 
                             id="mobile-left-input"
                             name="mobile-left-input"
                             v-model="leftValue" 
@@ -97,14 +100,17 @@
                             @input="convertFromLeft"
                             :maxlength="maxInputLength"
                             class="mobile-conversion-input"
-                        />
+                            rows="3"
+                            spellcheck="false"
+                            ref="mobileLeftTextarea"
+                        ></textarea>
                     </div>
                 </div>
-
+                
 
 
                 <div class="mobile-result-section">
-                    <div class="mobile-result-container">
+                    <div class="mobile-result-container" ref="mobileResultContainer">
                         <div class="mobile-result-value">{{ rightValue || '&nbsp;' }}</div>
                     </div>
                 </div>
@@ -138,17 +144,28 @@ const ERROR_MESSAGES = {
 }
 
 const VALIDATION_PATTERNS = {
-    2: /^[01]+$/,
-    8: /^[0-7]+$/,
-    10: /^\d+$/,
-    16: /^[0-9A-F]+$/
+    2: /^[01]+(\.[01]+)?$/,
+    8: /^[0-7]+(\.[0-7]+)?$/,
+    10: /^\d+(\.\d+)?$/,
+    16: /^[0-9A-F]+(\.[0-9A-F]+)?$/
 }
 
 const PLACEHOLDERS = {
-    2: '例如：1010',
-    8: '例如：777',
-    10: '例如：255',
-    16: '例如：FF'
+    2: '例如：1010.101',
+    8: '例如：777.5',
+    10: '例如：255.75',
+    16: '例如：FF.A'
+}
+
+const TEXTAREA_ADJUST_CONFIG = {
+    leftTextarea: { maxHeight: 260 },
+    rightTextarea: { maxHeight: 260 },
+    mobileLeftTextarea: { maxHeight: 160 }
+}
+
+const MOBILE_RESULT_HEIGHT = {
+    base: 110,
+    max: 200
 }
 
 export default {
@@ -165,7 +182,7 @@ export default {
             errorMessage: '',
             debounceTimer: null,
             debouncedConversion: null,
-            maxInputLength: 20,
+            maxInputLength: 100,
             baseOptions: BASE_OPTIONS
         }
     },
@@ -188,15 +205,84 @@ export default {
             return this.baseOptions
         }
     },
+    watch: {
+        leftValue() {
+            this.adjustTextareaHeight('leftTextarea', TEXTAREA_ADJUST_CONFIG.leftTextarea)
+            this.adjustTextareaHeight('mobileLeftTextarea', TEXTAREA_ADJUST_CONFIG.mobileLeftTextarea)
+        },
+        rightValue() {
+            this.adjustTextareaHeight('rightTextarea', TEXTAREA_ADJUST_CONFIG.rightTextarea)
+            this.adjustMobileResultHeight()
+        }
+    },
     methods: {
         getPlaceholder(base) {
             return PLACEHOLDERS[base] || '輸入數值'
         },
 
-        // 修復：添加回 getAvailableBases 方法
         getAvailableBases() {
             return this.baseOptions
         },
+
+        adjustTextareaHeight(refName, options = {}) {
+            const { maxHeight = null } = options
+            this.$nextTick(() => {
+                const ref = this.$refs[refName]
+                if (!ref) return
+
+                const elements = Array.isArray(ref) ? ref : [ref]
+                elements.forEach((textarea) => {
+                    if (!textarea) return
+                    textarea.style.height = 'auto'
+                    const scrollHeight = textarea.scrollHeight
+                    let newHeight = scrollHeight
+                    let shouldScroll = false
+
+                    if (maxHeight && scrollHeight > maxHeight) {
+                        newHeight = maxHeight
+                        shouldScroll = true
+                    }
+
+                    textarea.style.height = `${newHeight}px`
+                    textarea.style.overflowY = shouldScroll ? 'auto' : 'hidden'
+                })
+            })
+        },
+
+        adjustAllTextareas() {
+            Object.keys(TEXTAREA_ADJUST_CONFIG).forEach(refName => {
+                this.adjustTextareaHeight(refName, TEXTAREA_ADJUST_CONFIG[refName])
+            })
+            this.adjustMobileResultHeight()
+        },
+
+        adjustMobileResultHeight() {
+            this.$nextTick(() => {
+                const container = this.$refs.mobileResultContainer
+                if (!container) return
+
+                const { base, max } = MOBILE_RESULT_HEIGHT
+                const previousOverflow = container.style.overflowY
+
+                container.style.height = `${base}px`
+                const scrollHeight = container.scrollHeight
+
+                if (scrollHeight <= base) {
+                    container.style.height = `${base}px`
+                    container.style.overflowY = 'hidden'
+                    return
+                }
+
+                const targetHeight = Math.min(scrollHeight, max)
+                container.style.height = `${targetHeight}px`
+                container.style.overflowY = scrollHeight > max ? 'auto' : 'hidden'
+
+                if (previousOverflow !== container.style.overflowY && container.style.overflowY === 'auto') {
+                    container.scrollTop = 0
+                }
+            })
+        },
+
 
         
         setBase(side, base) {
@@ -261,11 +347,16 @@ export default {
         convertFromLeft() {
             this.initDebouncedConversion()
             this.debouncedConversion('left')
+            this.adjustTextareaHeight('leftTextarea', TEXTAREA_ADJUST_CONFIG.leftTextarea)
+            this.adjustTextareaHeight('mobileLeftTextarea', TEXTAREA_ADJUST_CONFIG.mobileLeftTextarea)
+            this.adjustMobileResultHeight()
         },
 
         convertFromRight() {
             this.initDebouncedConversion()
             this.debouncedConversion('right')
+            this.adjustTextareaHeight('rightTextarea', TEXTAREA_ADJUST_CONFIG.rightTextarea)
+            this.adjustMobileResultHeight()
         },
 
 
@@ -377,30 +468,83 @@ export default {
                 throw new Error(errorMessages[fromBase])
             }
 
-            return parseInt(cleanValue, fromBase)
+            // 小數點轉換
+            if (cleanValue.includes('.')) {
+                const [integerPart, fractionalPart] = cleanValue.split('.')
+                
+                const integerDecimal = parseInt(integerPart, fromBase)
+                
+                let fractionalDecimal = 0
+                if (fractionalPart) {
+                    for (let i = 0; i < fractionalPart.length; i++) {
+                        const digit = parseInt(fractionalPart[i], fromBase)
+                        fractionalDecimal += digit / Math.pow(fromBase, i + 1)
+                    }
+                }
+                
+                return integerDecimal + fractionalDecimal
+            } else {
+                return parseInt(cleanValue, fromBase)
+            }
         },
 
         convertFromDecimal(decimalValue, toBase) {
             if (decimalValue === 0) return '0'
             
-            let result = ''
-            let value = Math.abs(decimalValue)
+            const isNegative = decimalValue < 0
+            const absValue = Math.abs(decimalValue)
             
-            while (value > 0) {
-                const remainder = value % toBase
-                if (toBase === 16) {
-                    result = (remainder < 10 ? remainder.toString() : String.fromCharCode(65 + remainder - 10)) + result
-                } else {
-                    result = remainder.toString() + result
+            const integerPart = Math.floor(absValue)
+            const fractionalPart = absValue - integerPart
+            
+            let integerResult = ''
+            let value = integerPart
+            
+            if (value === 0) {
+                integerResult = '0'
+            } else {
+                while (value > 0) {
+                    const remainder = value % toBase
+                    if (toBase === 16) {
+                        integerResult = (remainder < 10 ? remainder.toString() : String.fromCharCode(65 + remainder - 10)) + integerResult
+                    } else {
+                        integerResult = remainder.toString() + integerResult
+                    }
+                    value = Math.floor(value / toBase)
                 }
-                value = Math.floor(value / toBase)
             }
             
-            return result
+            let fractionalResult = ''
+            if (fractionalPart > 0) {
+                let frac = fractionalPart
+                let precision = 0
+                const maxPrecision = 50
+                
+                while (frac > 0 && precision < maxPrecision) {
+                    frac *= toBase
+                    const digit = Math.floor(frac)
+                    if (toBase === 16) {
+                        fractionalResult += (digit < 10 ? digit.toString() : String.fromCharCode(65 + digit - 10))
+                    } else {
+                        fractionalResult += digit.toString()
+                    }
+                    frac -= digit
+                    precision++
+                }
+            }
+            
+            let result = integerResult
+            if (fractionalResult) {
+                result += '.' + fractionalResult
+            }
+            
+            return isNegative ? '-' + result : result
         }
     },
     mounted() {
         this.initDebouncedConversion()
+        this.adjustAllTextareas()
+        this.adjustMobileResultHeight()
     },
     
     beforeUnmount() {
@@ -462,7 +606,7 @@ export default {
 
 .conversion-interface {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 2rem;
     width: 100%;
     max-width: 800px;
@@ -523,7 +667,11 @@ export default {
     box-sizing: border-box;
     min-height: 60px;
     line-height: 1.4;
+    resize: none;
+    overflow-y: hidden;
+    overflow-wrap: anywhere;
 }
+
 
 .conversion-input:focus {
     outline: none;
@@ -541,6 +689,7 @@ export default {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    align-self: stretch;
 }
 
 .arrow {
@@ -587,9 +736,9 @@ export default {
         padding: 10px 15px;
         min-height: 100vh;
         height: auto;
-        justify-content: center;
-        padding-top: 20vh;
-        padding-bottom: 10vh;
+        justify-content: flex-end;
+        padding-top: 8vh;
+        padding-bottom: 16vh;
     }
     
     .header-section {
@@ -606,7 +755,8 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 0.8rem;
-        max-width: 100%;
+        width: min(92vw, 260px);
+        margin: 0 auto;
     }
     
     /* 進制選擇區域 */
@@ -648,11 +798,12 @@ export default {
     .mobile-result-container {
         width: 100%;
         box-sizing: border-box;
+        margin: 0 auto;
     }
     
     .mobile-conversion-input {
         width: 100%;
-        padding: 16px;
+        padding: 12px 14px;
         border: 2px solid var(--bg-light);
         border-radius: var(--border-radius);
         background-color: var(--bg-dark);
@@ -660,8 +811,11 @@ export default {
         font-size: 1.2rem;
         font-family: 'Courier New', monospace;
         box-sizing: border-box;
-        height: 60px;
+        min-height: 48px;
         line-height: 1.4;
+        resize: none;
+        overflow-y: hidden;
+        overflow-wrap: anywhere;
     }
     
     .mobile-conversion-input:focus {
@@ -679,27 +833,31 @@ export default {
         border: 2px solid var(--bg-light);
         border-radius: var(--border-radius);
         background-color: var(--bg-darker);
-        height: 60px;
+        height: 110px;
+        min-height: 110px;
+        max-height: 200px;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         line-height: 1.4;
         box-sizing: border-box;
+        overflow-y: hidden;
     }
-    
+
     .mobile-result-value {
         color: white;
         font-size: 1.2rem;
         font-family: 'Courier New', monospace;
         word-break: break-all;
         width: 100%;
+        white-space: pre-wrap;
     }
 }
 
 @media (max-width: 480px) {
     .base-converter-container {
         padding: 8px 10px;
-        padding-top: 15vh;
-        padding-bottom: 8vh;
+        padding-top: 6vh;
+        padding-bottom: 18vh;
     }
     
     .title {
@@ -713,8 +871,8 @@ export default {
     
     .mobile-conversion-input {
         font-size: 16px; 
-        padding: 14px;
-        height: 60px;
+        padding: 12px 14px;
+        min-height: 48px;
     }
     
     .base-select {
@@ -731,8 +889,8 @@ export default {
 @media (max-width: 360px) {
     .base-converter-container {
         padding: 6px 8px;
-        padding-top: 12vh;
-        padding-bottom: 6vh;
+        padding-top: 5vh;
+        padding-bottom: 16vh;
     }
     
     .title {
@@ -741,9 +899,9 @@ export default {
     }
     
     .mobile-conversion-input {
-        padding: 12px;
+        padding: 10px 12px;
         font-size: 15px;
-        height: 60px;
+        min-height: 46px;
     }
     
     .base-select {
