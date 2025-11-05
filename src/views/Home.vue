@@ -3,17 +3,9 @@
         <div class="toolbox-title">
             <h1>工具箱</h1>
         </div>
-        <input 
-            v-model="searchQuery" 
-            type="text" 
-            id="search-input" 
-            name="search" 
-            placeholder="搜尋工具或分類..." 
-            class="search-input"
-            aria-label="搜尋工具或分類"
-            aria-describedby="search-help"
-            @keydown.enter="handleSearchEnter"
-        />
+        <input v-model="searchQuery" type="text" id="search-input" name="search" placeholder="搜尋工具或分類..."
+            class="search-input" aria-label="搜尋工具或分類" aria-describedby="search-help"
+            @keydown.enter="handleSearchEnter" />
         <div id="search-help" class="sr-only">輸入工具名稱或分類來搜尋可用的工具</div>
         <div class="categories-container">
             <div v-if="categories.length === 0" class="no-results">
@@ -29,7 +21,8 @@
                         </div>
                     </router-link>
                     <a v-for="tool in groupedTools[category].filter(t => t.isExternal)" :key="tool.name"
-                        :href="tool.path" target="_blank" class="tool-link" :aria-label="`開啟 ${tool.nameZh || tool.name} 工具（新視窗）`">
+                        :href="tool.path" target="_blank" class="tool-link"
+                        :aria-label="`開啟 ${tool.nameZh || tool.name} 工具（新視窗）`">
                         <div class="tool-button">
                             {{ tool.name }}
                         </div>
@@ -93,6 +86,14 @@ export default {
                 name: 'Base Converter',
                 nameZh: '進制轉換器',
                 path: '/base-converter',
+                isExternal: false,
+                category: '小工具',
+                categoryEn: 'Tools'
+            },
+            {
+                name: 'System Info',
+                nameZh: '系統資訊',
+                path: '/system-info',
                 isExternal: false,
                 category: '小工具',
                 categoryEn: 'Tools'

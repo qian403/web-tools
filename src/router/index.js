@@ -6,6 +6,7 @@ import PasswordGenerator from '@/views/password-generator.vue'
 import TextRevealer from '@/views/TextRevealer.vue'
 import DiceGame from '@/views/DiceGame.vue'
 import BaseConverter from '@/views/BaseConverter.vue'
+import SystemInfo from '@/views/SystemInfo.vue'
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     path: '/base-converter',
     name: 'BaseConverter',
     component: BaseConverter
+  },
+  {
+    path: '/system-info',
+    name: 'SystemInfo',
+    component: SystemInfo
   }
 ]
 
