@@ -5,28 +5,32 @@
             <h2 class="tool-title">系統資訊</h2>
             <div class="cards-grid">
                 <!-- 螢幕資訊卡片 -->
-                <div class="info-card">
+                <div class="info-card screen-card">
                     <div class="card-header">
                         <h3 class="card-title">螢幕資訊</h3>
                     </div>
                     <div class="card-content">
-                        <div class="info-row">
+                        <div class="info-row" @click="copyField(systemInfo.screen.resolution)">
                             <span class="info-label">螢幕解析度</span>
                             <span class="info-value">{{ systemInfo.screen.resolution }}</span>
                         </div>
-                        <div class="info-row">
+                        <div class="info-row" @click="copyField(systemInfo.screen.availableResolution)">
                             <span class="info-label">可用解析度</span>
                             <span class="info-value">{{ systemInfo.screen.availableResolution }}</span>
                         </div>
-                        <div class="info-row">
+                        <div class="info-row" @click="copyField(systemInfo.screen.colorDepth)">
                             <span class="info-label">色彩深度</span>
                             <span class="info-value">{{ systemInfo.screen.colorDepth }}</span>
                         </div>
-                        <div class="info-row">
+                        <div class="info-row" @click="copyField(systemInfo.screen.pixelRatio)">
+                            <span class="info-label">像素比</span>
+                            <span class="info-value">{{ systemInfo.screen.pixelRatio }}</span>
+                        </div>
+                        <div class="info-row" @click="copyField(systemInfo.screen.windowSize)">
                             <span class="info-label">視窗大小</span>
                             <span class="info-value">{{ systemInfo.screen.windowSize }}</span>
                         </div>
-                        <div class="info-row">
+                        <div class="info-row" @click="copyField(systemInfo.screen.orientation)">
                             <span class="info-label">螢幕方向</span>
                             <span class="info-value">{{ systemInfo.screen.orientation }}</span>
                         </div>
@@ -34,58 +38,84 @@
                 </div>
 
                 <!-- 瀏覽器資訊卡片 -->
-                <div class="info-card">
+                <div class="info-card browser-card">
                     <div class="card-header">
                         <h3 class="card-title">瀏覽器資訊</h3>
                     </div>
                     <div class="card-content">
-                        <div class="info-row">
+                        <div class="info-row" @click="copyField(systemInfo.browser.name)">
                             <span class="info-label">瀏覽器</span>
                             <span class="info-value">{{ systemInfo.browser.name }}</span>
                         </div>
-                        <div class="info-row">
+                        <div class="info-row" @click="copyField(systemInfo.browser.version)">
                             <span class="info-label">版本</span>
                             <span class="info-value">{{ systemInfo.browser.version }}</span>
                         </div>
-                        <div class="info-row">
+                        <div class="info-row"
+                            @click="copyField(`${systemInfo.browser.engine} ${systemInfo.browser.engineVersion}`)">
                             <span class="info-label">引擎</span>
                             <span class="info-value">{{ systemInfo.browser.engine }} {{ systemInfo.browser.engineVersion
-                            }}</span>
+                                }}</span>
                         </div>
-                        <div class="info-row">
+                        <div class="info-row" @click="copyField(systemInfo.browser.language)">
                             <span class="info-label">語言</span>
                             <span class="info-value">{{ systemInfo.browser.language }}</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">Cookie</span>
-                            <span class="info-value">{{ systemInfo.browser.cookieEnabled ? '啟用' : '停用' }}</span>
+                            <span class="info-value">
+                                <span :class="systemInfo.browser.cookieEnabled ? 'status-enabled' : 'status-disabled'">
+                                    {{ systemInfo.browser.cookieEnabled ? '✓ 啟用' : '✗ 停用' }}
+                                </span>
+                            </span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">網路狀態</span>
+                            <span class="info-value">
+                                <span :class="systemInfo.browser.onLine ? 'status-enabled' : 'status-disabled'">
+                                    {{ systemInfo.browser.onLine ? '✓ 在線' : '✗ 離線' }}
+                                </span>
+                            </span>
                         </div>
                     </div>
                 </div>
 
                 <!-- 作業系統資訊卡片 -->
-                <div class="info-card">
+                <div class="info-card os-card">
                     <div class="card-header">
                         <h3 class="card-title">作業系統</h3>
                     </div>
                     <div class="card-content">
-                        <div class="info-row">
+                        <div class="info-row" @click="copyField(systemInfo.os.name)">
                             <span class="info-label">作業系統</span>
                             <span class="info-value">{{ systemInfo.os.name }}</span>
                         </div>
-                        <div class="info-row">
+                        <div class="info-row" @click="copyField(systemInfo.os.version)">
                             <span class="info-label">版本</span>
                             <span class="info-value">{{ systemInfo.os.version }}</span>
                         </div>
-                        <div class="info-row">
+                        <div class="info-row" @click="copyField(systemInfo.os.architecture)">
+                            <span class="info-label">架構</span>
+                            <span class="info-value">{{ systemInfo.os.architecture }}</span>
+                        </div>
+                        <div class="info-row" @click="copyField(systemInfo.os.cpuCores)">
+                            <span class="info-label">CPU 核心</span>
+                            <span class="info-value">{{ systemInfo.os.cpuCores }}</span>
+                        </div>
+                        <div class="info-row" @click="copyField(systemInfo.device.type)">
                             <span class="info-label">裝置類型</span>
                             <span class="info-value">{{ systemInfo.device.type }}</span>
+                        </div>
+                        <div class="info-row" @click="copyField(systemInfo.os.memory)"
+                            v-if="systemInfo.os.memory !== '未知'">
+                            <span class="info-label">記憶體</span>
+                            <span class="info-value">{{ systemInfo.os.memory }}</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- User Agent 卡片 - 佔滿整行 -->
-                <div class="info-card full-width">
+                <div class="info-card full-width ua-card">
                     <div class="card-header">
                         <h3 class="card-title">User Agent</h3>
                     </div>
@@ -158,19 +188,35 @@ export default {
 
         const copied = ref(false);
 
+        // 改進方向檢測
         const getOrientation = () => {
             if (window.screen.orientation && window.screen.orientation.type) {
-                return window.screen.orientation.type;
+                const type = window.screen.orientation.type;
+                const orientationMap = {
+                    'portrait-primary': '直向（主要）',
+                    'portrait-secondary': '直向（次要）',
+                    'landscape-primary': '橫向（主要）',
+                    'landscape-secondary': '橫向（次要）'
+                };
+                return orientationMap[type] || type;
             }
-            return window.innerWidth > window.innerHeight ? 'landscape-primary' : 'portrait-primary';
+            return window.innerWidth > window.innerHeight ? '橫向（主要）' : '直向（主要）';
         };
 
+        // 改進網路資訊檢測
         const getNetworkInfo = () => {
             const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 
             if (connection) {
+                const typeMap = {
+                    'slow-2g': '慢速 2G',
+                    '2g': '2G',
+                    '3g': '3G',
+                    '4g': '4G',
+                    '5g': '5G'
+                };
                 return {
-                    type: connection.effectiveType || '不支援',
+                    type: typeMap[connection.effectiveType] || connection.effectiveType || '未知',
                     downlink: connection.downlink ? `${connection.downlink} Mbps` : '不支援',
                     saveData: connection.saveData || false,
                     rtt: connection.rtt ? `${connection.rtt} ms` : '不支援'
@@ -183,6 +229,46 @@ export default {
                 saveData: false,
                 rtt: '不支援'
             };
+        };
+
+        // 改進裝置類型檢測
+        const getDeviceType = (uaResult) => {
+            const type = uaResult.device.type;
+            if (type) {
+                const typeMap = {
+                    'mobile': '手機',
+                    'tablet': '平板',
+                    'smarttv': '智慧電視',
+                    'wearable': '穿戴裝置',
+                    'embedded': '嵌入式裝置',
+                    'console': '遊戲主機'
+                };
+                return typeMap[type] || type;
+            }
+
+            // 如果 UAParser 無法識別，使用其他方法判斷
+            const isMobile = /Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isTablet = /iPad|Android(?!.*Mobile)|Tablet/i.test(navigator.userAgent);
+
+            if (isTablet) return '平板';
+            if (isMobile) return '手機';
+            return '桌面電腦';
+        };
+
+        // 改進作業系統名稱顯示
+        const formatOSName = (name) => {
+            const osMap = {
+                'Windows': 'Windows',
+                'Mac OS': 'macOS',
+                'iOS': 'iOS',
+                'Android': 'Android',
+                'Linux': 'Linux',
+                'Ubuntu': 'Ubuntu',
+                'Debian': 'Debian',
+                'Fedora': 'Fedora',
+                'ChromeOS': 'Chrome OS'
+            };
+            return osMap[name] || name;
         };
 
         const updateSystemInfo = () => {
@@ -201,23 +287,23 @@ export default {
                     orientation: getOrientation()
                 },
                 browser: {
-                    name: result.browser.name || '未知',
-                    version: result.browser.version || '未知',
-                    engine: result.engine.name || '未知',
+                    name: result.browser.name || '未知瀏覽器',
+                    version: result.browser.version || '未知版本',
+                    engine: result.engine.name || '未知引擎',
                     engineVersion: result.engine.version || '',
-                    language: navigator.language || navigator.userLanguage || '未知',
+                    language: navigator.languages ? navigator.languages.join(', ') : (navigator.language || '未知'),
                     cookieEnabled: navigator.cookieEnabled,
                     onLine: navigator.onLine
                 },
                 os: {
-                    name: result.os.name || '未知',
-                    version: result.os.version || '未知',
-                    architecture: result.cpu.architecture || '未知',
+                    name: formatOSName(result.os.name) || '未知系統',
+                    version: result.os.version || '未知版本',
+                    architecture: result.cpu.architecture || '未知架構',
                     cpuCores: navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} 核心` : '未知',
                     memory: navigator.deviceMemory ? `${navigator.deviceMemory} GB` : '未知'
                 },
                 device: {
-                    type: result.device.type || 'Desktop',
+                    type: getDeviceType(result),
                     vendor: result.device.vendor || '未知',
                     model: result.device.model || '未知'
                 },
@@ -231,11 +317,24 @@ export default {
             showToast('資訊已更新', 'success');
         };
 
+        // 新增：複製單個欄位
+        const copyField = async (text) => {
+            if (!text || text === '未知' || text === '不支援') return;
+
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast('已複製', 'success');
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                showToast('複製失敗', 'error');
+            }
+        };
+
         const copyToClipboard = async (text) => {
             try {
                 await navigator.clipboard.writeText(text);
                 copied.value = true;
-                showToast('已複製到剪貼簿！', 'success');
+                showToast('已複製到剪貼簿', 'success');
                 setTimeout(() => {
                     copied.value = false;
                 }, 2000);
@@ -257,26 +356,26 @@ export default {
                 padding: '12px 20px',
                 borderRadius: '8px',
                 color: 'white',
-                fontWeight: 'bold',
+                fontWeight: '600',
                 zIndex: '9999',
                 opacity: '0',
-                transform: 'translateX(100%)',
-                transition: 'all 0.3s ease',
-                backgroundColor: type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'
+                transition: 'opacity 0.3s ease',
+                backgroundColor: type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
             });
 
             document.body.appendChild(toast);
 
             setTimeout(() => {
                 toast.style.opacity = '1';
-                toast.style.transform = 'translateX(0)';
             }, 10);
 
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100%)';
                 setTimeout(() => {
-                    document.body.removeChild(toast);
+                    if (toast.parentNode) {
+                        document.body.removeChild(toast);
+                    }
                 }, 300);
             }, 2000);
         };
@@ -299,7 +398,8 @@ export default {
             systemInfo,
             copied,
             refreshInfo,
-            copyToClipboard
+            copyToClipboard,
+            copyField
         };
     }
 };
@@ -313,38 +413,47 @@ export default {
     box-sizing: border-box;
     padding: 8px 0 80px 0;
     margin: 0;
-    background-color: #2d3748;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
     overflow-x: hidden;
 }
 
 .tool-container {
     width: 100%;
     max-width: 1400px;
-    margin-top: 20px;
-    margin-bottom: 40px;
-    justify-content: flex-start;
+    margin: 20px auto 40px;
+    padding: 0 20px;
 }
 
 .tool-title {
     text-align: center;
     color: white;
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 30px;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* 卡片網格佈局 - 一行三個 */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 24px;
 }
 
-/* 卡片樣式 */
+/* 卡片樣式 - Glassmorphism 效果 */
 .info-card {
-    background-color: transparent;
-    border-radius: 0;
-    padding: 0;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* 佔滿整行的卡片 */
@@ -354,7 +463,12 @@ export default {
 
 /* 卡片標題區 */
 .card-header {
-    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .card-title {
@@ -375,20 +489,25 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
     transition: all 0.2s ease;
-    margin-bottom: 8px;
+    cursor: pointer;
+    position: relative;
 }
 
 .info-row:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.info-row:active {
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .info-label {
     color: rgba(255, 255, 255, 0.7);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     flex-shrink: 0;
 }
@@ -401,83 +520,110 @@ export default {
     word-break: break-word;
 }
 
+/* 狀態指示器 */
+.status-enabled {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.status-disabled {
+    color: #ef4444;
+    font-weight: 600;
+}
+
 /* User Agent 樣式 */
 .ua-text {
     width: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 14px;
-    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    border-radius: 10px;
     font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
     font-size: 13px;
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
     line-height: 1.6;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 16px;
     resize: none;
     overflow: hidden;
     word-wrap: break-word;
     white-space: pre-wrap;
     box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.ua-text:focus {
+    outline: none;
+    border-color: rgba(59, 130, 246, 0.5);
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .button-group {
     display: flex;
-    gap: 12px;
+    gap: 16px;
 }
 
 .action-btn {
     flex: 1;
-    padding: 12px 24px;
+    padding: 14px 24px;
     font-size: 15px;
     font-weight: 600;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .copy-btn {
-    background-color: #0072E3;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .copy-btn:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 114, 227, 0.4);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
 }
 
 .refresh-btn {
-    background-color: #48bb78;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .refresh-btn:hover {
-    background-color: #38a169;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.action-btn:active {
+    opacity: 0.9;
 }
 
 /* 平板尺寸 - 一行兩個 */
 @media (max-width: 1024px) {
     .cards-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
+        gap: 20px;
     }
 
     .tool-title {
-        font-size: 28px;
+        font-size: 32px;
+    }
+
+    .tool-container {
+        padding: 0 16px;
     }
 }
 
 /* 手機尺寸 - 一行一個 */
 @media (max-width: 768px) {
     .page-container {
-        padding: 12px 4px;
+        padding: 8px 0 60px 0;
     }
 
     .tool-container {
-        padding: 0 4px;
+        padding: 0 12px;
+        margin-top: 12px;
     }
 
     .tool-title {
@@ -486,140 +632,124 @@ export default {
     }
 
     .cards-grid {
-        display: grid;
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 16px;
     }
 
     .info-card {
-        padding: 16px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        min-height: auto;
-    }
-
-    .card-icon {
-        font-size: 24px;
-    }
-
-    .card-title {
-        font-size: 18px;
+        padding: 16px;
+        border-radius: 12px;
     }
 
     .card-header {
-        padding: 0 16px;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
     }
 
-    .card-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+    .card-title {
+        font-size: 17px;
     }
 
     .info-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-        padding: 10px 16px;
-        margin: 0;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+    }
+
+    .info-row:hover {
+        padding-right: 12px;
+    }
+
+    .info-label {
+        font-size: 13px;
+        min-width: 80px;
     }
 
     .info-value {
-        text-align: left;
-        width: 100%;
+        text-align: right;
+        font-size: 13px;
     }
 
     .button-group {
-        flex-direction: column;
-        padding: 0 16px;
+        flex-direction: row;
+        gap: 10px;
     }
 
     .action-btn {
-        width: 100%;
+        padding: 11px 18px;
+        font-size: 14px;
     }
 
     .ua-text {
-        font-size: 10px;
+        font-size: 11px;
         padding: 12px;
         line-height: 1.5;
-        height: auto;
-        min-height: auto;
-        resize: none;
-        box-sizing: border-box;
-        margin: 0;
-        overflow: hidden;
-        word-wrap: break-word;
-        white-space: pre-wrap;
+        margin-bottom: 12px;
     }
 }
 
 /* 小手機尺寸優化 */
 @media (max-width: 480px) {
     .page-container {
-        padding: 10px 4px;
+        padding: 8px 0 50px 0;
     }
 
     .tool-container {
-        padding: 0 4px;
+        padding: 0 8px;
+    }
+
+    .tool-title {
+        font-size: 22px;
+        margin-bottom: 16px;
     }
 
     .cards-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 12px;
     }
 
     .info-card {
-        padding: 12px 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        min-height: auto;
+        padding: 14px;
+        border-radius: 10px;
     }
 
     .card-header {
-        gap: 8px;
-        margin-bottom: 16px;
-        padding: 0 12px;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
     }
 
-    .card-content {
-        gap: 8px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+    .card-title {
+        font-size: 16px;
     }
 
     .info-row {
-        padding: 10px 12px;
-        margin: 0;
+        padding: 9px 10px;
+        gap: 6px;
     }
 
     .info-label {
         font-size: 12px;
+        min-width: 70px;
     }
 
     .info-value {
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .ua-text {
-        font-size: 9px;
+        font-size: 10px;
         padding: 10px;
         line-height: 1.4;
-        height: auto;
-        min-height: auto;
-        resize: none;
-        box-sizing: border-box;
-        margin: 0;
-        overflow: hidden;
-        word-wrap: break-word;
-        white-space: pre-wrap;
+        margin-bottom: 10px;
     }
 
     .button-group {
-        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .action-btn {
+        padding: 10px 16px;
+        font-size: 13px;
     }
 }
 </style>
