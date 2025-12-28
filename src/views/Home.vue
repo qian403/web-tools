@@ -97,6 +97,14 @@ export default {
                 isExternal: false,
                 category: '小工具',
                 categoryEn: 'Tools'
+            },
+            {
+                name: 'QR Code',
+                nameZh: 'QR Code 產生器',
+                path: '/qr-code',
+                isExternal: false,
+                category: '小工具',
+                categoryEn: 'Tools'
             }
         ];
 

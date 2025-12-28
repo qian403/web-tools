@@ -7,6 +7,7 @@ import TextRevealer from '@/views/TextRevealer.vue'
 import DiceGame from '@/views/DiceGame.vue'
 import BaseConverter from '@/views/BaseConverter.vue'
 import SystemInfo from '@/views/SystemInfo.vue'
+import QrCodeGenerator from '@/views/QrCodeGenerator.vue'
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     path: '/system-info',
     name: 'SystemInfo',
     component: SystemInfo
+  },
+  {
+    path: '/qr-code',
+    name: 'QrCodeGenerator',
+    component: QrCodeGenerator
   }
 ]
 
