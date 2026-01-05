@@ -105,6 +105,14 @@ export default {
                 isExternal: false,
                 category: '小工具',
                 categoryEn: 'Tools'
+            },
+            {
+                name: '繁簡轉換',
+                nameZh: '繁簡轉換',
+                path: '/chinese-converter',
+                isExternal: false,
+                category: '小工具',
+                categoryEn: 'Tools'
             }
         ];
 
