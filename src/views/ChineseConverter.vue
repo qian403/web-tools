@@ -4,6 +4,7 @@
 
         <main class="tool-container">
             <h1 class="tool-title">繁簡轉換</h1>
+            <p class="tool-description">免費線上繁簡轉換工具，支援台灣繁體與中國簡體互轉，包含詞彙轉換。</p>
 
             <div class="main-content">
                 <div class="input-section">
@@ -117,8 +118,16 @@ export default {
 
 .tool-title {
     font-size: 1.75rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.5rem;
     text-align: center;
+}
+
+.tool-description {
+    color: #a0aec0;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
 }
 
 .main-content {

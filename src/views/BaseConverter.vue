@@ -7,6 +7,7 @@
             
             <div class="header-section">
                 <h2 class="title">進制轉換</h2>
+                <p class="subtitle">支援二進位、八進位、十進位、十六進位即時互轉，輸入後自動轉換。</p>
             </div>
             <div class="conversion-interface desktop-only">
                 <div class="conversion-panel">
@@ -600,6 +601,12 @@ export default {
     font-size: 2rem;
     margin-bottom: 0.5rem;
     color: var(--text-light);
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin: 0;
 }
 
 

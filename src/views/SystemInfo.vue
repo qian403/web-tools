@@ -3,6 +3,7 @@
         <BackToHome />
         <main class="tool-container">
             <h1 class="tool-title">系統資訊</h1>
+            <p class="tool-description">查看您的瀏覽器、作業系統、螢幕解析度及裝置相關資訊，點擊可複製。</p>
             <div class="cards-grid">
                 <!-- 螢幕資訊卡片 -->
                 <div class="info-card screen-card">
@@ -429,8 +430,15 @@ export default {
     color: white;
     font-size: 36px;
     font-weight: 700;
-    margin-bottom: 40px;
+    margin-bottom: 0.5rem;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.tool-description {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 1rem;
+    margin-bottom: 2rem;
 }
 
 /* 卡片網格佈局 - 一行三個 */

@@ -1,6 +1,7 @@
 <template>
     <div class="page-container" ref="containerRef">
         <BackToHome>返回首頁</BackToHome> <!-- 返回首頁按鈕 -->
+        <p class="tool-description">全螢幕文字展示工具，自動調整字體大小填滿畫面，適合簡報、標語或大螢幕展示。</p>
 
         <!-- 可編輯文字區 -->
         <div class="editor" contenteditable="true" ref="editorRef" @input="onInput"
@@ -85,6 +86,19 @@ function fitsInContainer() {
     /* 指定能同時涵蓋中英文字元的字體，如 Noto Sans TC */
     font-family: 'Noto Sans TC', sans-serif;
     overflow: hidden;
+}
+
+.tool-description {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #a0aec0;
+    font-size: 0.9rem;
+    text-align: center;
+    max-width: 90%;
+    line-height: 1.5;
+    z-index: 10;
 }
 
 

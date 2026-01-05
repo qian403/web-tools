@@ -4,6 +4,7 @@
 
         <main class="tool-container">
             <h1 class="tool-title">QR Code 產生器</h1>
+            <p class="tool-description">免費線上 QR Code 產生器，支援自訂顏色、尺寸與容錯等級，可下載 PNG 或 SVG 格式。</p>
 
             <div class="main-content">
                 <!-- 左側：輸入區域 -->
@@ -296,8 +297,16 @@ export default {
 
 .tool-title {
     font-size: 1.75rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.5rem;
     text-align: center;
+}
+
+.tool-description {
+    color: #a0aec0;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
 }
 
 .main-content {

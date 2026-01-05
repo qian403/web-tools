@@ -4,6 +4,7 @@
 
         <main class="dice-game-container">
             <h1 class="title">骰子遊戲</h1>
+            <p class="game-description">模擬擲骰子遊戲，可設定投注金額與獲勝機率，拖動滑桿調整難度。</p>
 
             <!-- 遊戲參數設定 -->
             <div class="game-settings">
@@ -455,8 +456,15 @@ export default {
 
 .title {
     font-size: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
     text-align: center;
+}
+
+.game-description {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
 }
 
 .game-settings {

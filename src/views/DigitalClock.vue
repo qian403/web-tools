@@ -4,6 +4,7 @@
     <BackToHome />
     <main class="clock-container" role="main" aria-label="數位時鐘">
       <h1 class="sr-only">數位時鐘</h1>
+      <p class="tool-description">全螢幕數位時鐘，即時顯示日期、星期與時間，適合簡報、會議或桌面展示使用。</p>
       <div class="datetime">
         <div class="date" aria-label="日期">{{ currentDate }}</div>
         <div class="weekday" aria-label="星期">{{ weekday }}</div>
@@ -93,5 +94,17 @@ export default {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+.tool-description {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #a0aec0;
+  font-size: 0.9rem;
+  text-align: center;
+  max-width: 90%;
+  line-height: 1.5;
 }
 </style>

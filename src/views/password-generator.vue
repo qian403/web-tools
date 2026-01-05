@@ -5,6 +5,7 @@
 
         <div class="tool-container">
             <h2 class="tool-title">隨機密碼產生器</h2>
+            <p class="tool-description">自訂長度、大小寫、數字及特殊符號，產生安全的隨機密碼。</p>
 
             <!-- 密碼長度滑桿 -->
             <div class="form-group">
@@ -174,6 +175,13 @@ export default {
 </script>
 
 <style scoped>
+.tool-description {
+    color: #a0aec0;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+}
 
 input[type="range"] {
     width: 200px;
