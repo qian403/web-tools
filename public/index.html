@@ -3,38 +3,92 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
     
     <!-- SEO Meta Tags -->
     <title>線上工具箱 | Web Tools</title>
     <meta name="description" content="免費線上工具箱，提供 QR Code 產生器、密碼產生器、進位轉換、繁簡轉換等實用小工具。">
     <meta name="keywords" content="線上工具,QR Code,密碼產生器,進位轉換,繁簡轉換,工具箱">
     <meta name="author" content="Qian">
+    <meta name="robots" content="index, follow">
+    <meta name="google-site-verification" content="Ctv_8i5sTPpLLBWbtuMDnUSJbGxcOEVU1_4HhhTEdxk" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="線上工具箱 | Web Tools">
     <meta property="og:description" content="免費線上工具箱，提供 QR Code 產生器、密碼產生器、進位轉換、繁簡轉換等實用小工具。">
     <meta property="og:locale" content="zh_TW">
+    <meta property="og:site_name" content="Web Tools">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="線上工具箱 | Web Tools">
     <meta name="twitter:description" content="免費線上工具箱，提供 QR Code 產生器、密碼產生器、進位轉換、繁簡轉換等實用小工具。">
     
-    <!-- Theme Color -->
+    <!-- PWA & Mobile -->
     <meta name="theme-color" content="#2d3748">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Web Tools">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon -->
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="apple-touch-icon" href="<%= BASE_URL %>favicon.ico">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://tools.qian30.net">
+    
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- 結構化資料 JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "線上工具箱",
+      "alternateName": "Web Tools",
+      "url": "https://tools.qian30.net",
+      "description": "免費線上工具箱，提供 QR Code 產生器、密碼產生器、進位轉換、繁簡轉換等實用小工具。",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TWD"
+      },
+      "featureList": [
+        "QR Code 產生器",
+        "密碼產生器",
+        "進位轉換器",
+        "繁簡轉換",
+        "數位時鐘",
+        "系統資訊"
+      ]
+    }
+    </script>
+    
+    <!-- Critical CSS - 首屏關鍵樣式內聯 -->
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box}
+      html,body{background:#2d3748;min-height:100vh}
+      #app{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;background:#2d3748;min-height:100vh}
+      .loading{display:flex;justify-content:center;align-items:center;height:100vh;color:#fff}
+    </style>
+    <!-- Umami Analytics -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="fb3f132d-0512-4f83-8a95-0f9338717c5c"></script>
   </head>
   <body>
     <noscript>
       <strong>此網站需要啟用 JavaScript 才能正常運作，請啟用後重新整理頁面。</strong>
     </noscript>
-    <div id="app"></div>
+    <div id="app">
+      <div class="loading">載入中...</div>
+    </div>
   </body>
 </html>

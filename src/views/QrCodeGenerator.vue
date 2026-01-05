@@ -2,8 +2,8 @@
     <div class="page-container">
         <BackToHome />
 
-        <div class="tool-container">
-            <h2 class="tool-title">QR Code 產生器</h2>
+        <main class="tool-container">
+            <h1 class="tool-title">QR Code 產生器</h1>
 
             <div class="main-content">
                 <!-- 左側：輸入區域 -->
@@ -129,7 +129,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 </template>
 

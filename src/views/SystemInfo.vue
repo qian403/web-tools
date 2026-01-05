@@ -1,8 +1,8 @@
 <template>
     <div class="page-container">
         <BackToHome />
-        <div class="tool-container">
-            <h2 class="tool-title">系統資訊</h2>
+        <main class="tool-container">
+            <h1 class="tool-title">系統資訊</h1>
             <div class="cards-grid">
                 <!-- 螢幕資訊卡片 -->
                 <div class="info-card screen-card">
@@ -132,7 +132,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 </template>
 

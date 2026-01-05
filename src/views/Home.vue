@@ -1,19 +1,20 @@
 <template>
-    <div class="toolbox">
-        <div class="toolbox-title">
+    <main class="toolbox" id="main-content">
+        <header class="toolbox-title">
             <h1>工具箱</h1>
-        </div>
+        </header>
+        <label for="search-input" class="sr-only">搜尋工具或分類</label>
         <input v-model="searchQuery" type="text" id="search-input" name="search" placeholder="搜尋工具或分類..."
-            class="search-input" aria-label="搜尋工具或分類" aria-describedby="search-help"
+            class="search-input" aria-describedby="search-help"
             @keydown.enter="handleSearchEnter" />
         <div id="search-help" class="sr-only">輸入工具名稱或分類來搜尋可用的工具</div>
         <div class="categories-container">
             <div v-if="categories.length === 0" class="no-results">
                 <p>沒有找到相關的工具</p>
             </div>
-            <div v-for="category in categories" :key="category" class="category-section">
+            <section v-for="category in categories" :key="category" class="category-section" :aria-label="category">
                 <h2 class="category-title">{{ category }}</h2>
-                <div class="tools-grid">
+                <nav class="tools-grid" :aria-label="`${category}工具列表`">
                     <router-link v-for="tool in groupedTools[category].filter(t => !t.isExternal)" :key="tool.name"
                         :to="tool.path" class="tool-link" :aria-label="`開啟 ${tool.nameZh || tool.name} 工具`">
                         <div class="tool-button">
@@ -21,16 +22,16 @@
                         </div>
                     </router-link>
                     <a v-for="tool in groupedTools[category].filter(t => t.isExternal)" :key="tool.name"
-                        :href="tool.path" target="_blank" class="tool-link"
+                        :href="tool.path" target="_blank" rel="noopener noreferrer" class="tool-link"
                         :aria-label="`開啟 ${tool.nameZh || tool.name} 工具（新視窗）`">
                         <div class="tool-button">
                             {{ tool.name }}
                         </div>
                     </a>
-                </div>
-            </div>
+                </nav>
+            </section>
         </div>
-    </div>
+    </main>
 </template>
 
 <script>

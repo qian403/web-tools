@@ -2,8 +2,8 @@
     <div class="page-container">
         <BackToHome />
 
-        <div class="tool-container">
-            <h2 class="tool-title">繁簡轉換</h2>
+        <main class="tool-container">
+            <h1 class="tool-title">繁簡轉換</h1>
 
             <div class="main-content">
                 <div class="input-section">
@@ -29,7 +29,7 @@
                     </Button>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 </template>
 

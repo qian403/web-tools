@@ -2,8 +2,8 @@
     <div class="page-container">
         <BackToHome />
 
-        <div class="dice-game-container">
-            <h2 class="title">骰子遊戲</h2>
+        <main class="dice-game-container">
+            <h1 class="title">骰子遊戲</h1>
 
             <!-- 遊戲參數設定 -->
             <div class="game-settings">
@@ -74,7 +74,7 @@
                 <span v-if="!isRolling">開始投注</span>
                 <span v-else class="rolling-text">投注中...</span>
             </Button>
-        </div>
+        </main>
     </div>
 </template>
 

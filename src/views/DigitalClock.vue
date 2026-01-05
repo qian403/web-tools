@@ -2,13 +2,14 @@
 <template>
   <div class="page-container">
     <BackToHome />
-    <div class="clock-container">
+    <main class="clock-container" role="main" aria-label="數位時鐘">
+      <h1 class="sr-only">數位時鐘</h1>
       <div class="datetime">
-        <div class="date">{{ currentDate }}</div>
-        <div class="weekday">{{ weekday }}</div>
-        <div class="time">{{ time }}</div>
+        <div class="date" aria-label="日期">{{ currentDate }}</div>
+        <div class="weekday" aria-label="星期">{{ weekday }}</div>
+        <time class="time" aria-live="polite" aria-label="目前時間">{{ time }}</time>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
@@ -80,5 +81,17 @@ export default {
 .weekday {
   font-size: min(5vw, 4vh);
   margin-bottom: min(3vw, 2vh);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 </style>
