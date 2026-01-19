@@ -114,6 +114,14 @@ export default {
                 isExternal: false,
                 category: '小工具',
                 categoryEn: 'Tools'
+            },
+            {
+                name: '字數統計',
+                nameZh: '字數統計',
+                path: '/word-counter',
+                isExternal: false,
+                category: '小工具',
+                categoryEn: 'Tools'
             }
         ];
 

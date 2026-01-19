@@ -12,13 +12,13 @@
     "nprogress": "^0.2.0",
     "opencc-js": "^1.0.5",
     "qrcode": "^1.5.4",
-    "ua-parser-js": "^2.0.6",
+    "ua-parser-js": "^2.0.8",
     "vue": "^3.2.13",
     "vue-router": "^4.4.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
+    "@babel/core": "^7.28.6",
+    "@babel/eslint-parser": "^7.28.6",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",

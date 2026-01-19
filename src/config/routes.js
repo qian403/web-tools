@@ -62,5 +62,12 @@ export const routesMeta = [
     title: '繁簡轉換 | Web Tools',
     description: '免費線上繁體簡體中文轉換工具，支援台灣繁體與中國簡體互轉，包含詞彙轉換。',
     keywords: '繁簡轉換,繁體轉簡體,簡體轉繁體,中文轉換,OpenCC'
+  },
+  {
+    path: '/word-counter',
+    name: 'WordCounter',
+    title: '字數統計 | Web Tools',
+    description: '免費線上字數統計工具，即時統計中英文字數、字元數、標點符號、行數等詳細數據。',
+    keywords: '字數統計,字元統計,中文字數,英文字數,Word Counter'
   }
 ]
