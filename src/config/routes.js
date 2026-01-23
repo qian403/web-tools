@@ -69,5 +69,12 @@ export const routesMeta = [
     title: '字數統計 | Web Tools',
     description: '免費線上字數統計工具，即時統計中英文字數、字元數、標點符號、行數等詳細數據。',
     keywords: '字數統計,字元統計,中文字數,英文字數,Word Counter'
+  },
+  {
+    path: '/regex-tester',
+    name: 'RegexTester',
+    title: '正則表達式測試 | Web Tools',
+    description: '免費線上正則表達式測試工具，即時測試 Regex，支援 flags 設定與匹配結果高亮顯示。',
+    keywords: '正則表達式,Regex,正規表示式,正則測試,Regular Expression'
   }
 ]

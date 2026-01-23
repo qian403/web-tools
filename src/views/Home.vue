@@ -122,6 +122,14 @@ export default {
                 isExternal: false,
                 category: '小工具',
                 categoryEn: 'Tools'
+            },
+            {
+                name: 'Regex 測試',
+                nameZh: '正則表達式測試',
+                path: '/regex-tester',
+                isExternal: false,
+                category: '小工具',
+                categoryEn: 'Tools'
             }
         ];
 

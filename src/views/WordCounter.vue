@@ -100,6 +100,22 @@ import { computed, ref } from 'vue'
 import BackToHome from '@/components/BackToHome.vue'
 import Button from '@/components/Button.vue'
 
+// 正則表達式模式（不帶 g flag，每次使用時動態加上）
+const PATTERNS = {
+    space: '\\s',
+    chinese: '[\\u4e00-\\u9fff\\u3400-\\u4dbf]',
+    englishChar: '[a-zA-Z]',
+    englishWord: '[a-zA-Z]+',
+    number: '[0-9]',
+    punctuation: '[，。、；：？！""\'\'（）【】《》〈〉「」『』…—～·,.;:?!\'"()\\[\\]{}<>@#$%^&*_+=|/\\\\`~-]'
+}
+
+// 計算匹配數量的輔助函數
+const countMatches = (text, pattern) => {
+    const regex = new RegExp(pattern, 'g')
+    return (text.match(regex) || []).length
+}
+
 export default {
     name: 'WordCounter',
     components: {
@@ -112,37 +128,32 @@ export default {
         const stats = computed(() => {
             const text = inputText.value
 
-            // 總字元數
+            if (!text) {
+                return {
+                    totalChars: 0,
+                    totalCharsNoSpace: 0,
+                    chineseChars: 0,
+                    englishChars: 0,
+                    englishWords: 0,
+                    numbers: 0,
+                    punctuation: 0,
+                    spaces: 0,
+                    lines: 0,
+                    paragraphs: 0,
+                    pureText: 0
+                }
+            }
+
             const totalChars = text.length
-
-            // 空白字元（空格、tab、換行）
-            const spaces = (text.match(/\s/g) || []).length
-
-            // 不含空白的字元數
+            const spaces = countMatches(text, PATTERNS.space)
             const totalCharsNoSpace = totalChars - spaces
-
-            // 中文字（包含繁簡體）
-            const chineseChars = (text.match(/[\u4e00-\u9fff\u3400-\u4dbf]/g) || []).length
-
-            // 英文字母
-            const englishChars = (text.match(/[a-zA-Z]/g) || []).length
-
-            // 英文單字
-            const englishWords = (text.match(/[a-zA-Z]+/g) || []).length
-
-            // 數字
-            const numbers = (text.match(/[0-9]/g) || []).length
-
-            // 標點符號（中英文標點）
-            const punctuation = (text.match(/[，。、；：？！""''（）【】《》〈〉「」『』…—～·,.;:?!'"()[\]{}<>@#$%^&*_+=|/\\`~-]/g) || []).length
-
-            // 行數
-            const lines = text ? text.split('\n').length : 0
-
-            // 段落數（以空行分隔）
-            const paragraphs = text ? text.split(/\n\s*\n/).filter(p => p.trim()).length : 0
-
-            // 純文字（不含空白和標點）
+            const chineseChars = countMatches(text, PATTERNS.chinese)
+            const englishChars = countMatches(text, PATTERNS.englishChar)
+            const englishWords = countMatches(text, PATTERNS.englishWord)
+            const numbers = countMatches(text, PATTERNS.number)
+            const punctuation = countMatches(text, PATTERNS.punctuation)
+            const lines = text.split('\n').length
+            const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim()).length
             const pureText = chineseChars + englishChars + numbers
 
             return {
@@ -169,7 +180,7 @@ export default {
                 const text = await navigator.clipboard.readText()
                 inputText.value = text
             } catch {
-                // 剪貼簿存取失敗
+                // 剪貼簿存取失敗，靜默處理
             }
         }
 
