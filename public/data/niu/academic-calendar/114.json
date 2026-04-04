@@ -1,0 +1,738 @@
+{
+  "source_file": "663121759.pdf",
+  "file_type": "application/pdf",
+  "document_title": "國立宜蘭大學 114 學年度行事曆",
+  "academic_year_roc": 114,
+  "academic_year_gregorian_span": "2025-2026",
+  "maintenance_unit": "教務處",
+  "latest_maintenance_date_roc": "115年3月11日",
+  "latest_maintenance_date_iso": "2026-03-11",
+  "approval": {
+    "admin_meeting_approval_roc": "114年4月1日 113學年度第12次行政會議通過",
+    "admin_meeting_approval_iso": "2025-04-01",
+    "ministry_reference_roc": "114年4月15日臺教高(一)字第1140040127號函同意備查",
+    "ministry_reference_iso": "2025-04-15"
+  },
+  "notes": [
+    "各紀念日、民俗節日及行政機關辦公時間依人事行政總處規定調整。",
+    "具原住民身分者，其各該原住民族歲時祭儀放假日期，依行政院原住民委員會公告日期放假。",
+    "「重要行事」欄之日期如有調整，由各該業務主管單位另行公告；如有疑問，亦請洽詢各該業務主管。"
+  ],
+  "update_note": "依據行政院函告「中華民國 114 年政府行政機關辦公日曆表（修正版）」及「中華民國 115 年政府行政機關辦公日曆表」，本次更新內容包括各紀念日、民俗節日及行政機關辦公時間，並同步調整相關聯之重要行事日期及畢業典禮日期。",
+  "pages": [
+    {
+      "page_number": 1,
+      "semester": 1,
+      "title": "國立宜蘭大學 114 學年度第 1 學期行事曆",
+      "covered_months": [
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11",
+        "2025-12",
+        "2026-01"
+      ],
+      "event_count": 46,
+      "events": [
+        {
+          "date_text": "8/1",
+          "start_date": "2025-08-01",
+          "end_date": "2025-08-01",
+          "description": "114 學年度第 1 學期開始",
+          "is_range": false
+        },
+        {
+          "date_text": "8/15",
+          "start_date": "2025-08-15",
+          "end_date": "2025-08-15",
+          "description": "暑修結束",
+          "is_range": false
+        },
+        {
+          "date_text": "8/19",
+          "start_date": "2025-08-19",
+          "end_date": "2025-08-19",
+          "description": "送交暑修成績截止",
+          "is_range": false
+        },
+        {
+          "date_text": "8/22~25",
+          "start_date": "2025-08-22",
+          "end_date": "2025-08-25",
+          "description": "網路初選（新生、轉學生、復學生）及舊生第 2 次初選",
+          "is_range": true
+        },
+        {
+          "date_text": "8/25~27",
+          "start_date": "2025-08-25",
+          "end_date": "2025-08-27",
+          "description": "社團幹部訓練",
+          "is_range": true
+        },
+        {
+          "date_text": "8/28",
+          "start_date": "2025-08-28",
+          "end_date": "2025-08-28",
+          "description": "研究生新生註冊繳費截止",
+          "is_range": false
+        },
+        {
+          "date_text": "8/30~9/1",
+          "start_date": "2025-08-30",
+          "end_date": "2025-09-01",
+          "description": "新生宿舍入宿",
+          "is_range": true
+        },
+        {
+          "date_text": "9/1",
+          "start_date": "2025-09-01",
+          "end_date": "2025-09-01",
+          "description": "新生家長親師座談會",
+          "is_range": false
+        },
+        {
+          "date_text": "9/2~5",
+          "start_date": "2025-09-02",
+          "end_date": "2025-09-05",
+          "description": "新生入學輔導及新鮮人營隊",
+          "is_range": true
+        },
+        {
+          "date_text": "9/2",
+          "start_date": "2025-09-02",
+          "end_date": "2025-09-02",
+          "description": "第二梯次大學部畢業證書核發",
+          "is_range": false
+        },
+        {
+          "date_text": "9/5",
+          "start_date": "2025-09-05",
+          "end_date": "2025-09-05",
+          "description": "註冊繳費截止日",
+          "is_range": false
+        },
+        {
+          "date_text": "9/5",
+          "start_date": "2025-09-05",
+          "end_date": "2025-09-05",
+          "description": "申請提前畢業截止、新生申請保留入學截止、 （113 學年度第 2 學期） 研究生辦理離校手續截止",
+          "is_range": false
+        },
+        {
+          "date_text": "9/5~19",
+          "start_date": "2025-09-05",
+          "end_date": "2025-09-19",
+          "description": "網路加退選",
+          "is_range": true
+        },
+        {
+          "date_text": "9/8",
+          "start_date": "2025-09-08",
+          "end_date": "2025-09-08",
+          "description": "開學（正式上課）",
+          "is_range": false
+        },
+        {
+          "date_text": "9/10",
+          "start_date": "2025-09-10",
+          "end_date": "2025-09-10",
+          "description": "班級幹部訓練",
+          "is_range": false
+        },
+        {
+          "date_text": "9/19",
+          "start_date": "2025-09-19",
+          "end_date": "2025-09-19",
+          "description": "教師申請更正成績截止",
+          "is_range": false
+        },
+        {
+          "date_text": "9/19",
+          "start_date": "2025-09-19",
+          "end_date": "2025-09-19",
+          "description": "輔系、雙主修、課程抵免申請截止",
+          "is_range": false
+        },
+        {
+          "date_text": "9/22",
+          "start_date": "2025-09-22",
+          "end_date": "2025-09-22",
+          "description": "期中預警開始（至11 月 21 日止）",
+          "is_range": false
+        },
+        {
+          "date_text": "9/28",
+          "start_date": "2025-09-28",
+          "end_date": "2025-09-28",
+          "description": "孔子誕辰紀念日（適逢假日）",
+          "is_range": false
+        },
+        {
+          "date_text": "9/29",
+          "start_date": "2025-09-29",
+          "end_date": "2025-09-29",
+          "description": "孔子誕辰紀念日補假（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "10/6",
+          "start_date": "2025-10-06",
+          "end_date": "2025-10-06",
+          "description": "中秋節（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "10/10",
+          "start_date": "2025-10-10",
+          "end_date": "2025-10-10",
+          "description": "國慶日（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "10/17",
+          "start_date": "2025-10-17",
+          "end_date": "2025-10-17",
+          "description": "學期",
+          "is_range": false
+        },
+        {
+          "date_text": "1/3",
+          "start_date": "2026-01-03",
+          "end_date": "2026-01-03",
+          "description": "退費基準日",
+          "is_range": false
+        },
+        {
+          "date_text": "10/20~11/14",
+          "start_date": "2025-10-20",
+          "end_date": "2025-11-14",
+          "description": "期中教師教學評量調查",
+          "is_range": true
+        },
+        {
+          "date_text": "10/24",
+          "start_date": "2025-10-24",
+          "end_date": "2025-10-24",
+          "description": "臺灣光復暨金門古寧頭大捷紀念日補假（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "10/25",
+          "start_date": "2025-10-25",
+          "end_date": "2025-10-25",
+          "description": "臺灣光復暨金門古寧頭大捷紀念日（適逢假日）",
+          "is_range": false
+        },
+        {
+          "date_text": "10/27~11/28",
+          "start_date": "2025-10-27",
+          "end_date": "2025-11-28",
+          "description": "申請停修期間",
+          "is_range": true
+        },
+        {
+          "date_text": "10/27~11/9",
+          "start_date": "2025-10-27",
+          "end_date": "2025-11-09",
+          "description": "期中考試（評量時間自行安排）",
+          "is_range": true
+        },
+        {
+          "date_text": "11/28",
+          "start_date": "2025-11-28",
+          "end_date": "2025-11-28",
+          "description": "學期",
+          "is_range": false
+        },
+        {
+          "date_text": "2/3",
+          "start_date": "2026-02-03",
+          "end_date": "2026-02-03",
+          "description": "退費基準日",
+          "is_range": false
+        },
+        {
+          "date_text": "11/30",
+          "start_date": "2025-11-30",
+          "end_date": "2025-11-30",
+          "description": "碩博士學位考試申請截止",
+          "is_range": false
+        },
+        {
+          "date_text": "12/15~1/2",
+          "start_date": "2025-12-15",
+          "end_date": "2026-01-02",
+          "description": "期末教師教學評量調查",
+          "is_range": true
+        },
+        {
+          "date_text": "12/22~1/11",
+          "start_date": "2025-12-22",
+          "end_date": "2026-01-11",
+          "description": "期末考試（評量時間自行安排）",
+          "is_range": true
+        },
+        {
+          "date_text": "12/25",
+          "start_date": "2025-12-25",
+          "end_date": "2025-12-25",
+          "description": "行憲紀念日（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "12/29~1/2",
+          "start_date": "2025-12-29",
+          "end_date": "2026-01-02",
+          "description": "網路初選",
+          "is_range": true
+        },
+        {
+          "date_text": "12/29~1/11",
+          "start_date": "2025-12-29",
+          "end_date": "2026-01-11",
+          "description": "第 17、18 週教學彈性週（依教學大綱公告為準）",
+          "is_range": true
+        },
+        {
+          "date_text": "1/1",
+          "start_date": "2026-01-01",
+          "end_date": "2026-01-01",
+          "description": "開國紀念日（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "1/2",
+          "start_date": "2026-01-02",
+          "end_date": "2026-01-02",
+          "description": "申請休學截止",
+          "is_range": false
+        },
+        {
+          "date_text": "1/11",
+          "start_date": "2026-01-11",
+          "end_date": "2026-01-11",
+          "description": "預警輔導截止",
+          "is_range": false
+        },
+        {
+          "date_text": "1/12",
+          "start_date": "2026-01-12",
+          "end_date": "2026-01-12",
+          "description": "寒假開始",
+          "is_range": false
+        },
+        {
+          "date_text": "1/16",
+          "start_date": "2026-01-16",
+          "end_date": "2026-01-16",
+          "description": "送交學期成績截止",
+          "is_range": false
+        },
+        {
+          "date_text": "1/22",
+          "start_date": "2026-01-22",
+          "end_date": "2026-01-22",
+          "description": "公告學期成績",
+          "is_range": false
+        },
+        {
+          "date_text": "1/26",
+          "start_date": "2026-01-26",
+          "end_date": "2026-01-26",
+          "description": "郵寄學期成績單",
+          "is_range": false
+        },
+        {
+          "date_text": "1/31",
+          "start_date": "2026-01-31",
+          "end_date": "2026-01-31",
+          "description": "本學期研究生學位考試截止日",
+          "is_range": false
+        },
+        {
+          "date_text": "1/31",
+          "start_date": "2026-01-31",
+          "end_date": "2026-01-31",
+          "description": "114 學年度第 1 學期結束",
+          "is_range": false
+        }
+      ],
+      "source_extracted_text": "【維護單位】教務處 【最新維護日期】115年 3月 11日 國立宜蘭大學 114 學年度第 1 學期行事曆 114 年4 月1 日 113 學年度第12 次行政會議通過 教育部 114 年4 月15 日臺教高(一)字第 1140040127 號函同意備查 月 週星 次期 日 一 二 三 四 五 六 重要行事 一 一 四 年 八 月 暑六 1 2 8/1 114 學年度第 1 學期開始 暑七 3 4 5 6 7 8 9 暑八 10 11 12 13 14 15 16 8/15 暑修結束 暑九 17 18 19 20 21 22 23 8/19 送交暑修成績截止 8/22~25 網路初選（新生、轉學生、復學生）及舊生第 2 次初選 暑十 24 25 26 27 28 29 30 8/25~27 社團幹部訓練 8/28 研究生新生註冊繳費截止 預備週 31 8/30~9/1 新生宿舍入宿 九 月 預備週 1 2 3 4 5 6 9/1 新生家長親師座談會；9/2~5 新生入學輔導及新鮮人營隊 9/2 第二梯次大學部畢業證書核發 9/5 註冊繳費截止日 9/5 申請提前畢業截止、新生申請保留入學截止、 （113 學年度第 2 學期） 研究生辦理離校手續截止 9/5~19 網路加退選 一 7 8 9 10 11 12 13 9/8 開學（正式上課） 9/10 班級幹部訓練 二 14 15 16 17 18 19 20 9/19 教師申請更正成績截止 9/19 輔系、雙主修、課程抵免申請截止 三 21 22 23 24 25 26 27 9/22 期中預警開始（至11 月 21 日止） 四 28 29 30 9/28 孔子誕辰紀念日（適逢假日） 9/29 孔子誕辰紀念日補假（放假一天） 十 月 四 1 2 3 4 五 5 6 7 8 9 10 11 10/6 中秋節（放假一天） 10/10 國慶日（放假一天） 六 12 13 14 15 16 17 18 10/17 學期 1/3 退費基準日 七 19 20 21 22 23 24 25 10/20~11/14 期中教師教學評量調查 10/24 臺灣光復暨金門古寧頭大捷紀念日補假（放假一天） 10/25 臺灣光復暨金門古寧頭大捷紀念日（適逢假日） 八 26 27 28 29 30 31 10/27~11/28 申請停修期間 10/27~11/9 期中考試（評量時間自行安排） 十 一 月 八 1 九 2 3 4 5 6 7 8 十 9 10 11 12 13 14 15 十一 16 17 18 19 20 21 22 十二 23 24 25 26 27 28 29 11/28 學期2/3 退費基準日 十三 30 11/30 碩博士學位考試申請截止 十 二 月 十三 1 2 3 4 5 6 十四 7 8 9 10 11 12 13 十五 14 15 16 17 18 19 20 12/15~1/2 期末教師教學評量調查 十六 21 22 23 24 25 26 27 12/22~1/11 期末考試（評量時間自行安排） 12/25 行憲紀念日（放假一天） 十七 28 29 30 31 12/29~1/2 網路初選 12/29~1/11 第 17、18 週教學彈性週（依教學大綱公告為準） 一 一 五 年 一 月 十七 1 2 3 1/1 開國紀念日（放假一天） 1/2 申請休學截止 十八 4 5 6 7 8 9 10 寒一 11 12 13 14 15 16 17 1/11 預警輔導截止 1/12 寒假開始 1/16 送交學期成績截止 寒二 18 19 20 21 22 23 24 1/22 公告學期成績 寒三 25 26 27 28 29 30 31 1/26 郵寄學期成績單 1/31 本學期研究生學位考試截止日 1/31 114 學年度第 1 學期結束 ◎註 1：各紀念日、民俗節日及行政機關辦公時間依人事行政總處規定調整。 2：具原住民身分者，其各該原住民族歲時祭儀放假日期，依行政院原住民委員會公告日期放假。 3： 「重要行事」欄之日期如有調整，由各該業務主管單位另行公告；如有疑問，亦請洽詢各該業務主管。 ◎更新說明：依據行政院函告「中華民國 114 年政府行政機關辦公日曆表（修正版） 」及「中華民國 115 年政府行政機關辦公日曆 表」 ，本次更新內容包括各紀念日、民俗節日及行政機關辦公時間，並同步調整相關聯之重要行事日期及畢業典禮日期。"
+    },
+    {
+      "page_number": 2,
+      "semester": 2,
+      "title": "國立宜蘭大學 114 學年度第 2 學期行事曆",
+      "covered_months": [
+        "2026-02",
+        "2026-03",
+        "2026-04",
+        "2026-05",
+        "2026-06",
+        "2026-07"
+      ],
+      "event_count": 51,
+      "events": [
+        {
+          "date_text": "2/1",
+          "start_date": "2026-02-01",
+          "end_date": "2026-02-01",
+          "description": "114 學年第 2 學期開始",
+          "is_range": false
+        },
+        {
+          "date_text": "2/5",
+          "start_date": "2026-02-05",
+          "end_date": "2026-02-05",
+          "description": "核發 114 學年度第1 學期大學部畢業證書",
+          "is_range": false
+        },
+        {
+          "date_text": "2/13",
+          "start_date": "2026-02-13",
+          "end_date": "2026-02-13",
+          "description": "申請提前畢業截止、 （114 學年度第 1 學期）研究生辦理離校手續截止",
+          "is_range": false
+        },
+        {
+          "date_text": "2/15",
+          "start_date": "2026-02-15",
+          "end_date": "2026-02-15",
+          "description": "除夕前一日（適逢假日）",
+          "is_range": false
+        },
+        {
+          "date_text": "2/16",
+          "start_date": "2026-02-16",
+          "end_date": "2026-02-16",
+          "description": "除夕",
+          "is_range": false
+        },
+        {
+          "date_text": "2/17~19",
+          "start_date": "2026-02-17",
+          "end_date": "2026-02-19",
+          "description": "春節",
+          "is_range": true
+        },
+        {
+          "date_text": "2/20",
+          "start_date": "2026-02-20",
+          "end_date": "2026-02-20",
+          "description": "除夕前一日補假（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "2/21~22",
+          "start_date": "2026-02-21",
+          "end_date": "2026-02-22",
+          "description": "宿舍入宿",
+          "is_range": true
+        },
+        {
+          "date_text": "2/23",
+          "start_date": "2026-02-23",
+          "end_date": "2026-02-23",
+          "description": "開學日",
+          "is_range": false
+        },
+        {
+          "date_text": "2/23",
+          "start_date": "2026-02-23",
+          "end_date": "2026-02-23",
+          "description": "註冊繳費截止日",
+          "is_range": false
+        },
+        {
+          "date_text": "2/23~3/6",
+          "start_date": "2026-02-23",
+          "end_date": "2026-03-06",
+          "description": "網路加退選",
+          "is_range": true
+        },
+        {
+          "date_text": "2/23",
+          "start_date": "2026-02-23",
+          "end_date": "2026-02-23",
+          "description": "碩士班甄試新生申請提前入學截止",
+          "is_range": false
+        },
+        {
+          "date_text": "2/25",
+          "start_date": "2026-02-25",
+          "end_date": "2026-02-25",
+          "description": "班級幹部訓練",
+          "is_range": false
+        },
+        {
+          "date_text": "2/27",
+          "start_date": "2026-02-27",
+          "end_date": "2026-02-27",
+          "description": "和平紀念日補假（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "2/28",
+          "start_date": "2026-02-28",
+          "end_date": "2026-02-28",
+          "description": "和平紀念日（適逢假日）",
+          "is_range": false
+        },
+        {
+          "date_text": "3/6",
+          "start_date": "2026-03-06",
+          "end_date": "2026-03-06",
+          "description": "教師申請更正成績截止",
+          "is_range": false
+        },
+        {
+          "date_text": "3/6",
+          "start_date": "2026-03-06",
+          "end_date": "2026-03-06",
+          "description": "輔系、雙主修、課程抵免申請截止",
+          "is_range": false
+        },
+        {
+          "date_text": "3/9",
+          "start_date": "2026-03-09",
+          "end_date": "2026-03-09",
+          "description": "期中成績預警開始（至5 月 8 日止）",
+          "is_range": false
+        },
+        {
+          "date_text": "3/25",
+          "start_date": "2026-03-25",
+          "end_date": "2026-03-25",
+          "description": "校園徵才博覽會",
+          "is_range": false
+        },
+        {
+          "date_text": "4/2",
+          "start_date": "2026-04-02",
+          "end_date": "2026-04-02",
+          "description": "校際活動日（停課） ，授課教師自行擇期補課",
+          "is_range": false
+        },
+        {
+          "date_text": "4/3",
+          "start_date": "2026-04-03",
+          "end_date": "2026-04-03",
+          "description": "學期",
+          "is_range": false
+        },
+        {
+          "date_text": "1/3",
+          "start_date": "2026-01-03",
+          "end_date": "2026-01-03",
+          "description": "退費基準日",
+          "is_range": false
+        },
+        {
+          "date_text": "4/3",
+          "start_date": "2026-04-03",
+          "end_date": "2026-04-03",
+          "description": "兒童節補假（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "4/4",
+          "start_date": "2026-04-04",
+          "end_date": "2026-04-04",
+          "description": "兒童節（適逢假日）",
+          "is_range": false
+        },
+        {
+          "date_text": "4/5",
+          "start_date": "2026-04-05",
+          "end_date": "2026-04-05",
+          "description": "清明節（適逢假日）",
+          "is_range": false
+        },
+        {
+          "date_text": "4/6",
+          "start_date": "2026-04-06",
+          "end_date": "2026-04-06",
+          "description": "清明節補假（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "4/6~5/1",
+          "start_date": "2026-04-06",
+          "end_date": "2026-05-01",
+          "description": "期中教師教學評量調查",
+          "is_range": true
+        },
+        {
+          "date_text": "4/13~5/15",
+          "start_date": "2026-04-13",
+          "end_date": "2026-05-15",
+          "description": "申請停修期間",
+          "is_range": true
+        },
+        {
+          "date_text": "4/13~26",
+          "start_date": "2026-04-13",
+          "end_date": "2026-04-26",
+          "description": "期中考試（評量時間自行安排）",
+          "is_range": true
+        },
+        {
+          "date_text": "4/30",
+          "start_date": "2026-04-30",
+          "end_date": "2026-04-30",
+          "description": "碩博士學位考試申請截止",
+          "is_range": false
+        },
+        {
+          "date_text": "5/1",
+          "start_date": "2026-05-01",
+          "end_date": "2026-05-01",
+          "description": "勞動節（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "5/12",
+          "start_date": "2026-05-12",
+          "end_date": "2026-05-12",
+          "description": "校慶",
+          "is_range": false
+        },
+        {
+          "date_text": "5/15",
+          "start_date": "2026-05-15",
+          "end_date": "2026-05-15",
+          "description": "學期",
+          "is_range": false
+        },
+        {
+          "date_text": "2/3",
+          "start_date": "2026-02-03",
+          "end_date": "2026-02-03",
+          "description": "退費基準日",
+          "is_range": false
+        },
+        {
+          "date_text": "5/20",
+          "start_date": "2026-05-20",
+          "end_date": "2026-05-20",
+          "description": "社團成果觀摩競賽",
+          "is_range": false
+        },
+        {
+          "date_text": "5/27",
+          "start_date": "2026-05-27",
+          "end_date": "2026-05-27",
+          "description": "社團薪傳晚會",
+          "is_range": false
+        },
+        {
+          "date_text": "5/30",
+          "start_date": "2026-05-30",
+          "end_date": "2026-05-30",
+          "description": "畢業典禮",
+          "is_range": false
+        },
+        {
+          "date_text": "6/1~18",
+          "start_date": "2026-06-01",
+          "end_date": "2026-06-18",
+          "description": "期末教師教學評量調查",
+          "is_range": true
+        },
+        {
+          "date_text": "6/8~28",
+          "start_date": "2026-06-08",
+          "end_date": "2026-06-28",
+          "description": "期末考試（評量時間自行安排）",
+          "is_range": true
+        },
+        {
+          "date_text": "6/15~22",
+          "start_date": "2026-06-15",
+          "end_date": "2026-06-22",
+          "description": "網路初選（舊生）",
+          "is_range": true
+        },
+        {
+          "date_text": "6/18",
+          "start_date": "2026-06-18",
+          "end_date": "2026-06-18",
+          "description": "申請休學截止",
+          "is_range": false
+        },
+        {
+          "date_text": "6/19",
+          "start_date": "2026-06-19",
+          "end_date": "2026-06-19",
+          "description": "端午節（放假一天）",
+          "is_range": false
+        },
+        {
+          "date_text": "6/15~6/28",
+          "start_date": "2026-06-15",
+          "end_date": "2026-06-28",
+          "description": "第17、18 週教學彈性週（依教學大綱公告為準）",
+          "is_range": true
+        },
+        {
+          "date_text": "6/28",
+          "start_date": "2026-06-28",
+          "end_date": "2026-06-28",
+          "description": "預警輔導截止",
+          "is_range": false
+        },
+        {
+          "date_text": "6/29",
+          "start_date": "2026-06-29",
+          "end_date": "2026-06-29",
+          "description": "暑假開始",
+          "is_range": false
+        },
+        {
+          "date_text": "7/3",
+          "start_date": "2026-07-03",
+          "end_date": "2026-07-03",
+          "description": "送交學期成績截止",
+          "is_range": false
+        },
+        {
+          "date_text": "7/7",
+          "start_date": "2026-07-07",
+          "end_date": "2026-07-07",
+          "description": "公告學期成績",
+          "is_range": false
+        },
+        {
+          "date_text": "7/8",
+          "start_date": "2026-07-08",
+          "end_date": "2026-07-08",
+          "description": "暑修開始",
+          "is_range": false
+        },
+        {
+          "date_text": "7/13",
+          "start_date": "2026-07-13",
+          "end_date": "2026-07-13",
+          "description": "郵寄學期成績單",
+          "is_range": false
+        },
+        {
+          "date_text": "7/31",
+          "start_date": "2026-07-31",
+          "end_date": "2026-07-31",
+          "description": "本學期研究生學位考試截止日",
+          "is_range": false
+        },
+        {
+          "date_text": "7/31",
+          "start_date": "2026-07-31",
+          "end_date": "2026-07-31",
+          "description": "114 學年度第 2 學期結束",
+          "is_range": false
+        }
+      ],
+      "source_extracted_text": "【維護單位】教務處 【最新維護日期】115年 3月 11日 國立宜蘭大學 114 學年度第 2 學期行事曆 114 年4 月1 日 113 學年度第12 次行政會議通過 教育部 114 年4 月15 日臺教高(一)字第 1140040127 號函同意備查 月 週星 次期 日 一 二 三 四 五 六 重要行事 二 月 寒四 1 2 3 4 5 6 7 2/1 114 學年第 2 學期開始 2/5 核發 114 學年度第1 學期大學部畢業證書 寒五 8 9 10 11 12 13 14 2/13 申請提前畢業截止、 （114 學年度第 1 學期）研究生辦理離校手續截止 預備週 15 16 17 18 19 20 21 2/15 除夕前一日（適逢假日） ；2/16 除夕 2/17~19 春節；2/20 除夕前一日補假（放假一天） 2/21~22 宿舍入宿 一 22 23 24 25 26 27 28 2/23 開學日 2/23 註冊繳費截止日 2/23~3/6 網路加退選 2/23 碩士班甄試新生申請提前入學截止 2/25 班級幹部訓練 2/27 和平紀念日補假（放假一天） 2/28 和平紀念日（適逢假日） 三 月 二 1 2 3 4 5 6 7 3/6 教師申請更正成績截止 3/6 輔系、雙主修、課程抵免申請截止 三 8 9 10 11 12 13 14 3/9 期中成績預警開始（至5 月 8 日止） 四 15 16 17 18 19 20 21 五 22 23 24 25 26 27 28 3/25 校園徵才博覽會 六 29 30 31 四 月 六 1 (2) 3 4 4/2 校際活動日（停課） ，授課教師自行擇期補課 4/3 學期 1/3 退費基準日 4/3 兒童節補假（放假一天）；4/4 兒童節（適逢假日） 七 5 6 7 8 9 10 11 4/5 清明節（適逢假日） 4/6 清明節補假（放假一天） 4/6~5/1 期中教師教學評量調查 4/13~5/15 申請停修期間 八 12 13 14 15 16 17 18 4/13~26 期中考試（評量時間自行安排） 九 19 20 21 22 23 24 25 十 26 27 28 29 30 4/30 碩博士學位考試申請截止 五 月 十 1 2 5/1 勞動節（放假一天） 十一 3 4 5 6 7 8 9 十二 10 11 12 13 14 15 16 5/12 校慶 5/15 學期2/3 退費基準日 十三 17 18 19 20 21 22 23 5/20 社團成果觀摩競賽 十四 24 25 26 27 28 29 30 5/27 社團薪傳晚會 5/30 畢業典禮 十五 31 六 月 十五 1 2 3 4 5 6 6/1~18 期末教師教學評量調查 十六 7 8 9 10 11 12 13 6/8~28 期末考試（評量時間自行安排） 十七 14 15 16 17 18 19 20 6/15~22 網路初選（舊生） 6/18 申請休學截止 6/19 端午節（放假一天） 6/15~6/28 第17、18 週教學彈性週（依教學大綱公告為準） 十八 21 22 23 24 25 26 27 暑一 28 29 30 6/28 預警輔導截止 6/29 暑假開始 七 月 暑一 1 2 3 4 7/3 送交學期成績截止 暑二 5 6 7 8 9 10 11 7/7 公告學期成績 7/8 暑修開始 暑三 12 13 14 15 16 17 18 7/13 郵寄學期成績單 暑四 19 20 21 22 23 24 25 暑五 26 27 28 29 30 31 7/31 本學期研究生學位考試截止日 7/31 114 學年度第 2 學期結束 ◎註 1：各紀念日、民俗節日及行政機關辦公時間依人事行政總處規定調整。 2：具原住民身分者，其各該原住民族歲時祭儀放假日期，依行政院原住民委員會公告日期放假。 3： 「重要行事」欄之日期如有調整，由各該業務主管單位另行公告；如有疑問，亦請洽詢各該業務主管。 ◎更新說明：依據行政院函告「中華民國 114 年政府行政機關辦公日曆表（修正版） 」及「中華民國115 年政府行政機關辦公日曆 表」 ，本次更新內容包括各紀念日、民俗節日及行政機關辦公時間，並同步調整相關聯之重要行事日期及畢業典禮日期。"
+    }
+  ],
+  "total_event_count": 97
+}
