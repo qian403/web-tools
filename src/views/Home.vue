@@ -138,6 +138,14 @@ export default {
                 isExternal: false,
                 category: '小工具',
                 categoryEn: 'Tools'
+            },
+            {
+                name: 'IP 查詢',
+                nameZh: 'IP 查詢',
+                path: '/ip-lookup',
+                isExternal: false,
+                category: '小工具',
+                categoryEn: 'Tools'
             }
         ];
 

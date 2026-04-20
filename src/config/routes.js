@@ -83,5 +83,12 @@ export const routesMeta = [
     title: '端口選擇器 | Web Tools',
     description: '免費線上端口選擇器，隨機產生可用的端口號碼，適合開發測試使用。',
     keywords: '端口選擇器,隨機端口,Port Picker,開發工具,測試端口'
+  },
+  {
+    path: '/ip-lookup',
+    name: 'IpLookup',
+    title: 'IP 查詢 | Web Tools',
+    description: '免費線上 IP 查詢工具，查詢 IP 地理位置、ISP、ASN 等詳細資訊。',
+    keywords: 'IP查詢,IP地址,地理位置,ISP,ASN,IP Lookup'
   }
 ]

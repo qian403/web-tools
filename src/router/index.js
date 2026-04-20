@@ -22,6 +22,7 @@ const ChineseConverter = () => import('@/views/ChineseConverter.vue')
 const WordCounter = () => import('@/views/WordCounter.vue')
 const RegexTester = () => import('@/views/RegexTester.vue')
 const PortPicker = () => import('@/views/PortPicker.vue')
+const IpLookup = () => import('@/views/IpLookup.vue')
 
 const componentMap = {
   Home,
@@ -35,7 +36,8 @@ const componentMap = {
   ChineseConverter,
   WordCounter,
   RegexTester,
-  PortPicker
+  PortPicker,
+  IpLookup
 }
 
 // 從設定檔產生路由
