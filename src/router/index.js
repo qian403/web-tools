@@ -21,6 +21,7 @@ const QrCodeGenerator = () => import('@/views/QrCodeGenerator.vue')
 const ChineseConverter = () => import('@/views/ChineseConverter.vue')
 const WordCounter = () => import('@/views/WordCounter.vue')
 const RegexTester = () => import('@/views/RegexTester.vue')
+const PortPicker = () => import('@/views/PortPicker.vue')
 
 const componentMap = {
   Home,
@@ -33,7 +34,8 @@ const componentMap = {
   QrCodeGenerator,
   ChineseConverter,
   WordCounter,
-  RegexTester
+  RegexTester,
+  PortPicker
 }
 
 // 從設定檔產生路由

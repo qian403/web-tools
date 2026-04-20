@@ -130,6 +130,14 @@ export default {
                 isExternal: false,
                 category: '小工具',
                 categoryEn: 'Tools'
+            },
+            {
+                name: '端口選擇器',
+                nameZh: '端口選擇器',
+                path: '/port-picker',
+                isExternal: false,
+                category: '小工具',
+                categoryEn: 'Tools'
             }
         ];
 

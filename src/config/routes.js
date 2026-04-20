@@ -76,5 +76,12 @@ export const routesMeta = [
     title: '正則表達式測試 | Web Tools',
     description: '免費線上正則表達式測試工具，即時測試 Regex，支援 flags 設定與匹配結果高亮顯示。',
     keywords: '正則表達式,Regex,正規表示式,正則測試,Regular Expression'
+  },
+  {
+    path: '/port-picker',
+    name: 'PortPicker',
+    title: '端口選擇器 | Web Tools',
+    description: '免費線上端口選擇器，隨機產生可用的端口號碼，適合開發測試使用。',
+    keywords: '端口選擇器,隨機端口,Port Picker,開發工具,測試端口'
   }
 ]
