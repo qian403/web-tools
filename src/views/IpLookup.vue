@@ -235,6 +235,7 @@ export default {
     max-width: 900px;
     margin: 0 auto;
     padding: 2rem;
+    padding-top: 4rem;
 }
 
 /* 搜尋框 */
@@ -441,6 +442,7 @@ export default {
 @media (max-width: 768px) {
     .ip-lookup-container {
         padding: 1rem;
+        padding-top: 5rem;
     }
 
     .info-grid {
