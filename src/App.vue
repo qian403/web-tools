@@ -7,6 +7,12 @@
       </keep-alive>
     </transition>
   </router-view>
+  <footer class="site-footer">
+    <a href="https://github.com/qian403/web-tools" target="_blank" rel="noopener noreferrer">
+      qian403/web-tools
+    </a>
+    <span>© 2026 Web Tools</span>
+  </footer>
 </template>
 
 <script>
@@ -30,6 +36,15 @@ export default {
   padding: 0;
   min-height: 100vh;
   background-color: #2d3748;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ponytail: 各頁根容器自帶 min-height:100vh，會把 footer 擠出視窗。
+   讓路由內容改用 flex 撐滿、清掉它的 100vh，footer 才會貼在內容底部 */
+#app > :not(.site-footer) {
+  flex: 1 0 auto;
+  min-height: 0;
 }
 
 html, body {
@@ -58,6 +73,27 @@ html, body {
   top: 0;
   outline: 2px solid #fff;
   outline-offset: 2px;
+}
+
+/* Footer */
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 20px 16px;
+  color: #a0aec0;
+  font-size: 14px;
+}
+
+.site-footer a {
+  color: #4299e1;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
 }
 
 /* 頁面切換動畫 */
