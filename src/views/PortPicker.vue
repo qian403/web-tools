@@ -6,37 +6,41 @@
             <h2 class="tool-title">端口選擇器</h2>
             <p class="tool-description">隨機產生可用的端口號碼，適合開發測試使用。</p>
 
-            <div class="port-range-selector">
-                <div class="range-option">
-                    <span class="range-label">常用端口 (3000-9999)</span>
-                    <label class="switch">
-                        <input type="radio" v-model="portRange" value="common" />
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="range-option">
-                    <span class="range-label">註冊端口 (1024-49151)</span>
-                    <label class="switch">
-                        <input type="radio" v-model="portRange" value="registered" />
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-                <div class="range-option">
-                    <span class="range-label">動態端口 (49152-65535)</span>
-                    <label class="switch">
-                        <input type="radio" v-model="portRange" value="dynamic" />
-                        <span class="slider round"></span>
-                    </label>
-                </div>
+            <div class="port-range-selector" role="radiogroup" aria-label="端口範圍">
+                <button
+                    v-for="opt in rangeOptions"
+                    :key="opt.value"
+                    type="button"
+                    class="range-card"
+                    :class="{ active: portRange === opt.value }"
+                    role="radio"
+                    :aria-checked="portRange === opt.value"
+                    @click="portRange = opt.value"
+                >
+                    <span class="range-name">{{ opt.name }}</span>
+                    <span class="range-num">{{ opt.min }}–{{ opt.max }}</span>
+                </button>
             </div>
 
             <div class="button-container">
-                <Button variant="primary" @click="generatePort" aria-label="產生隨機端口">產生端口</Button>
+                <Button variant="primary" @click="generatePort" aria-label="產生隨機端口">
+                    {{ generatedPort ? '重新產生' : '產生端口' }}
+                </Button>
             </div>
 
-            <div v-if="generatedPort" class="result">
-                <div class="port-display">{{ generatedPort }}</div>
-                <Button variant="success" size="small" @click="copyToClipboard" aria-label="複製端口到剪貼簿">複製端口</Button>
+            <div class="result" :class="{ empty: !generatedPort }">
+                <template v-if="generatedPort">
+                    <button
+                        type="button"
+                        class="port-display"
+                        title="點擊複製"
+                        @click="copyToClipboard"
+                    >{{ generatedPort }}</button>
+                    <Button variant="success" size="small" @click="copyToClipboard" aria-label="複製端口到剪貼簿">
+                        複製端口
+                    </Button>
+                </template>
+                <span v-else class="result-placeholder">點擊上方按鈕產生端口</span>
             </div>
         </div>
     </div>
@@ -46,6 +50,12 @@
 import BackToHome from '@/components/BackToHome.vue'
 import Button from '@/components/Button.vue'
 
+const RANGE_OPTIONS = [
+    { value: 'common', name: '常用端口', min: 3000, max: 9999 },
+    { value: 'registered', name: '註冊端口', min: 1024, max: 49151 },
+    { value: 'dynamic', name: '動態端口', min: 49152, max: 65535 }
+]
+
 export default {
     name: 'PortPicker',
     components: {
@@ -54,44 +64,41 @@ export default {
     },
     data() {
         return {
+            rangeOptions: RANGE_OPTIONS,
             portRange: 'common',
             generatedPort: null
         }
     },
     methods: {
         generatePort() {
-            let min, max
-
-            switch (this.portRange) {
-                case 'common':
-                    min = 3000
-                    max = 9999
-                    break
-                case 'registered':
-                    min = 1024
-                    max = 49151
-                    break
-                case 'dynamic':
-                    min = 49152
-                    max = 65535
-                    break
-                default:
-                    min = 3000
-                    max = 9999
-            }
-
+            const { min, max } = RANGE_OPTIONS.find(o => o.value === this.portRange)
             this.generatedPort = Math.floor(Math.random() * (max - min + 1)) + min
         },
-        copyToClipboard() {
+        async copyToClipboard() {
             if (!this.generatedPort) return
-
-            navigator.clipboard.writeText(this.generatedPort.toString())
-                .then(() => {
-                    this.showToast('已複製到剪貼簿！', 'success')
-                })
-                .catch(() => {
-                    this.showToast('複製失敗，請手動複製', 'error')
-                })
+            const text = this.generatedPort.toString()
+            try {
+                // navigator.clipboard 只在 HTTPS / localhost 可用，區網 IP 用 http 開時為 undefined
+                if (navigator.clipboard) {
+                    await navigator.clipboard.writeText(text)
+                } else {
+                    this.fallbackCopy(text)
+                }
+                this.showToast('已複製到剪貼簿！', 'success')
+            } catch {
+                this.showToast('複製失敗，請手動複製', 'error')
+            }
+        },
+        fallbackCopy(text) {
+            const el = document.createElement('textarea')
+            el.value = text
+            el.style.position = 'fixed'
+            el.style.opacity = '0'
+            document.body.appendChild(el)
+            el.select()
+            const ok = document.execCommand('copy')
+            document.body.removeChild(el)
+            if (!ok) throw new Error('execCommand failed')
         },
         showToast(message, type = 'info') {
             const toast = document.createElement('div')
@@ -145,68 +152,49 @@ export default {
 
 .port-range-selector {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
     margin-bottom: 1.5rem;
-    align-items: flex-start;
 }
 
-.range-option {
+.range-card {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    width: 280px;
-}
-
-.range-label {
-    font-size: 0.95rem;
+    gap: 0.35rem;
+    min-width: 150px;
+    flex: 1 1 150px;
+    max-width: 200px;
+    padding: 1rem;
+    background-color: #2d3748;
+    border: 2px solid #4a5568;
+    border-radius: var(--border-radius);
     color: #e2e8f0;
-}
-
-/* iOS 風格開關 */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 24px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #4a5568;
-    transition: .4s;
-    border-radius: 34px;
+    font-family: inherit;
+    transition: all 0.2s ease;
 }
 
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
+.range-card:hover {
+    border-color: #718096;
+    transform: translateY(-2px);
 }
 
-.switch input:checked + .slider {
-    background-color: #4299e1;
+.range-card.active {
+    border-color: #4299e1;
+    background-color: #2b4a6f;
 }
 
-.switch input:checked + .slider:before {
-    transform: translateX(16px);
+.range-name {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.range-num {
+    font-size: 0.85rem;
+    color: #a0aec0;
+    font-family: 'Courier New', monospace;
 }
 
 .button-container {
@@ -214,6 +202,11 @@ export default {
 }
 
 .result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 190px;
     text-align: center;
     background-color: var(--secondary-bg);
     padding: var(--spacing-lg);
@@ -221,11 +214,30 @@ export default {
     margin-top: var(--spacing-lg);
 }
 
+.result.empty {
+    background-color: transparent;
+    border: 1px dashed #4a5568;
+}
+
+.result-placeholder {
+    color: #718096;
+    font-size: 0.95rem;
+}
+
 .port-display {
+    display: block;
+    width: 100%;
+    border: none;
+    background: none;
     font-size: 3rem;
     font-weight: bold;
     color: #4299e1;
     margin-bottom: 1rem;
     font-family: 'Courier New', monospace;
+    cursor: pointer;
+}
+
+.port-display:hover {
+    opacity: 0.85;
 }
 </style>
