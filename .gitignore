@@ -31,3 +31,6 @@ pnpm-debug.log*
 *.sw?
 .yarn/install-state.gz
 .yarn/install-state.gz
+
+# Playwright MCP
+.playwright-mcp/

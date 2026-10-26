@@ -90,5 +90,12 @@ export const routesMeta = [
     title: 'IP 查詢 | Web Tools',
     description: '免費線上 IP 查詢工具，查詢 IP 地理位置、ISP、ASN 等詳細資訊。',
     keywords: 'IP查詢,IP地址,地理位置,ISP,ASN,IP Lookup'
+  },
+  {
+    path: '/pdf-compressor',
+    name: 'PdfCompressor',
+    title: 'PDF 壓縮 | Web Tools',
+    description: '免費線上 PDF 壓縮工具，於瀏覽器本機壓縮 PDF 檔案，不上傳伺服器，支援自訂壓縮等級與影像品質。',
+    keywords: 'PDF壓縮,壓縮PDF,PDF縮小,減少PDF大小,PDF Compressor,線上壓縮'
   }
 ]
