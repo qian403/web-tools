@@ -146,6 +146,14 @@ export default {
                 isExternal: false,
                 category: '小工具',
                 categoryEn: 'Tools'
+            },
+            {
+                name: 'PDF 壓縮',
+                nameZh: 'PDF 壓縮',
+                path: '/pdf-compressor',
+                isExternal: false,
+                category: '小工具',
+                categoryEn: 'Tools'
             }
         ];
 

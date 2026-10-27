@@ -40,6 +40,11 @@ module.exports = defineConfig({
             test: /[\\/]node_modules[\\/]opencc-js[\\/]/,
             priority: 20
           },
+          pdf: {
+            name: 'chunk-pdf',
+            test: /[\\/]node_modules[\\/](pdfjs-dist|jspdf|pdf-lib)[\\/]/,
+            priority: 20
+          },
           common: {
             name: 'chunk-common',
             minChunks: 2,
@@ -64,5 +69,15 @@ module.exports = defineConfig({
           maxSize: 10 * 1024
         }
       })
+
+    // pdfjs-dist 的 legacy build 已預先編譯供舊瀏覽器使用，
+    // 若再經 babel（transpileDependencies: true）會注入 core-js 裸模組路徑，
+    // 導致其 worker 於瀏覽器動態載入時無法解析，故排除其轉譯。
+    config.module
+      .rule('js')
+      .exclude
+      .add(/node_modules[\\/]\.pnpm[\\/]pdfjs-dist@[^\\/]+[\\/]node_modules[\\/]pdfjs-dist/)
+      .add(/node_modules[\\/]pdfjs-dist/)
+      .end()
   }
 })

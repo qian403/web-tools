@@ -23,6 +23,7 @@ const WordCounter = () => import('@/views/WordCounter.vue')
 const RegexTester = () => import('@/views/RegexTester.vue')
 const PortPicker = () => import('@/views/PortPicker.vue')
 const IpLookup = () => import('@/views/IpLookup.vue')
+const PdfCompressor = () => import('@/views/PdfCompressor.vue')
 
 const componentMap = {
   Home,
@@ -37,7 +38,8 @@ const componentMap = {
   WordCounter,
   RegexTester,
   PortPicker,
-  IpLookup
+  IpLookup,
+  PdfCompressor
 }
 
 // 從設定檔產生路由
