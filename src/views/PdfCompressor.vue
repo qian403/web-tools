@@ -8,16 +8,10 @@
 
             <div class="main-content">
                 <!-- 上傳 / 檔案資訊 -->
-                <div
+                <label
                     v-if="!file"
                     class="dropzone"
                     :class="{ dragover: isDragging }"
-                    role="button"
-                    tabindex="0"
-                    aria-label="點擊或拖曳 PDF 檔案到此處上傳"
-                    @click="triggerFilePicker"
-                    @keydown.enter.prevent="triggerFilePicker"
-                    @keydown.space.prevent="triggerFilePicker"
                     @dragover.prevent="isDragging = true"
                     @dragleave.prevent="isDragging = false"
                     @drop.prevent="handleDrop"
@@ -37,9 +31,10 @@
                         type="file"
                         accept="application/pdf,.pdf"
                         class="sr-only"
+                        aria-label="選擇或拖曳 PDF 檔案上傳"
                         @change="handleFileChange"
                     />
-                </div>
+                </label>
 
                 <template v-else>
                     <!-- 檔案卡片 -->
@@ -176,9 +171,6 @@ export default {
         }
     },
     methods: {
-        triggerFilePicker() {
-            this.$refs.fileInput && this.$refs.fileInput.click()
-        },
         handleFileChange(e) {
             const f = e.target.files && e.target.files[0]
             if (f) this.setFile(f)
@@ -417,7 +409,7 @@ export default {
 }
 
 .dropzone:hover,
-.dropzone:focus-visible {
+.dropzone:focus-within {
     border-color: #4299e1;
     background-color: #202838;
     outline: none;
