@@ -13,7 +13,7 @@
                     class="dropzone"
                     :class="{ dragover: isDragging }"
                     @dragover.prevent="isDragging = true"
-                    @dragleave.prevent="isDragging = false"
+                    @dragleave.prevent="handleDragLeave"
                     @drop.prevent="handleDrop"
                 >
                     <div class="dropzone-icon">
@@ -176,6 +176,10 @@ export default {
             if (f) this.setFile(f)
             e.target.value = ''
         },
+        handleDragLeave(e) {
+            // 滑過內部子元素也會觸發 dragleave，僅在真正離開拖放區時才取消高亮
+            if (!e.currentTarget.contains(e.relatedTarget)) this.isDragging = false
+        },
         handleDrop(e) {
             this.isDragging = false
             const f = e.dataTransfer.files && e.dataTransfer.files[0]
@@ -235,7 +239,8 @@ export default {
                 this.showToast(saved > 0 ? '壓縮完成' : '此檔案已無法再縮小，已保留原檔', saved > 0 ? 'success' : 'info')
             } catch (err) {
                 console.error('PDF compress error:', err)
-                this.showToast('壓縮失敗，可能是受密碼保護或損毀的 PDF', 'error')
+                const encrypted = err && (err.name === 'PasswordException' || /encrypt|password/i.test(err.message || ''))
+                this.showToast(encrypted ? '此 PDF 受密碼保護，無法壓縮' : '壓縮失敗，檔案可能已損毀', 'error')
             } finally {
                 this.isCompressing = false
             }
@@ -296,10 +301,14 @@ export default {
             const url = URL.createObjectURL(this.result.blob)
             const link = document.createElement('a')
             const baseName = this.file.name.replace(/\.pdf$/i, '')
-            link.download = `${baseName}-compressed.pdf`
+            // 有實際縮小才加上 -compressed，保留原檔時沿用原檔名
+            link.download = this.result.saved > 0 ? `${baseName}-compressed.pdf` : this.file.name
             link.href = url
+            document.body.appendChild(link)
             link.click()
-            URL.revokeObjectURL(url)
+            link.remove()
+            // 延後釋放，避免 Safari／Firefox 在下載開始前就被 revoke 中斷
+            setTimeout(() => URL.revokeObjectURL(url), 2000)
             this.showToast('已下載 PDF', 'success')
         },
         reset() {
