@@ -57,26 +57,26 @@
                         <button class="file-remove" aria-label="移除檔案" @click="reset" :disabled="isCompressing">✕</button>
                     </div>
 
-                    <!-- 壓縮等級 -->
+                    <!-- 壓縮模式 -->
                     <div class="settings-section">
-                        <h3 class="settings-title">壓縮等級</h3>
-                        <div class="level-group" role="radiogroup" aria-label="壓縮等級">
+                        <h3 class="settings-title">壓縮方式</h3>
+                        <div class="level-group" role="radiogroup" aria-label="壓縮方式">
                             <button
-                                v-for="level in levels"
-                                :key="level.value"
+                                v-for="m in modes"
+                                :key="m.value"
                                 type="button"
                                 role="radio"
-                                :aria-checked="selectedLevel === level.value"
-                                :class="['level-option', { active: selectedLevel === level.value }]"
+                                :aria-checked="mode === m.value"
+                                :class="['level-option', { active: mode === m.value }]"
                                 :disabled="isCompressing"
-                                @click="selectLevel(level.value)"
+                                @click="mode = m.value"
                             >
-                                <span class="level-name">{{ level.label }}</span>
-                                <span class="level-desc">{{ level.desc }}</span>
+                                <span class="level-name">{{ m.label }}</span>
+                                <span class="level-desc">{{ m.desc }}</span>
                             </button>
                         </div>
 
-                        <div class="setting-item quality-item">
+                        <div v-if="mode === 'raster'" class="setting-item quality-item">
                             <label for="quality-range" class="setting-label">影像品質：{{ Math.round(quality * 100) }}%</label>
                             <input
                                 id="quality-range"
@@ -90,13 +90,15 @@
                                 @input="onQualityInput"
                             />
                         </div>
-                        <p class="settings-note">壓縮會將頁面重新轉為影像，檔案越小、畫質越低。文字內容將無法再被選取。</p>
+
+                        <p class="settings-note">{{ modeNote }}</p>
+                        <p class="settings-note guarantee">✓ 壓縮後絕不會比原檔大，若無法再縮小將自動保留原檔。</p>
                     </div>
 
                     <!-- 動作區 -->
                     <div v-if="!result" class="action-row">
                         <Button variant="primary" class="full-btn" :disabled="isCompressing" @click="compress">
-                            {{ isCompressing ? `壓縮中… ${progress}%` : '開始壓縮' }}
+                            {{ isCompressing ? `處理中… ${progress}%` : '開始壓縮' }}
                         </Button>
                         <div v-if="isCompressing" class="progress-bar" aria-hidden="true">
                             <div class="progress-fill" :style="{ width: progress + '%' }"></div>
@@ -113,15 +115,15 @@
                             <div class="size-arrow">→</div>
                             <div class="size-block">
                                 <span class="size-label">壓縮後</span>
-                                <span class="size-value highlight">{{ formatSize(result.compressedSize) }}</span>
+                                <span class="size-value" :class="{ highlight: result.saved > 0 }">{{ formatSize(result.compressedSize) }}</span>
                             </div>
                         </div>
                         <div class="result-badge" :class="result.saved > 0 ? 'good' : 'warn'">
-                            <template v-if="result.saved > 0">已縮減 {{ result.savedPercent }}%</template>
-                            <template v-else>此檔案已相當精簡，壓縮後未能縮小，建議保留原檔</template>
+                            <template v-if="result.saved > 0">已縮減 {{ result.savedPercent }}%（省下 {{ formatSize(result.saved) }}）</template>
+                            <template v-else>此檔案已相當精簡，無法再縮小，已為你保留原始檔案</template>
                         </div>
                         <div class="action-buttons">
-                            <Button variant="success" @click="download">下載壓縮後 PDF</Button>
+                            <Button variant="success" @click="download">下載 PDF</Button>
                             <Button variant="secondary" @click="reset">壓縮另一個</Button>
                         </div>
                     </div>
@@ -134,6 +136,7 @@
 <script>
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf'
 import { jsPDF } from 'jspdf'
+import { PDFDocument } from 'pdf-lib'
 import BackToHome from '@/components/BackToHome.vue'
 import Button from '@/components/Button.vue'
 
@@ -155,15 +158,21 @@ export default {
             isDragging: false,
             isCompressing: false,
             progress: 0,
-            selectedLevel: 'balanced',
+            mode: 'lossless',
             quality: 0.7,
             scale: 1.5,
             result: null,
-            levels: [
-                { value: 'light', label: '高品質', desc: '輕度壓縮', scale: 2, quality: 0.85 },
-                { value: 'balanced', label: '建議', desc: '品質與大小平衡', scale: 1.5, quality: 0.7 },
-                { value: 'strong', label: '最小檔案', desc: '高度壓縮', scale: 1, quality: 0.5 }
+            modes: [
+                { value: 'lossless', label: '無損優化', desc: '保留文字，安全壓縮' },
+                { value: 'raster', label: '強力壓縮', desc: '點陣化，適合掃描檔／圖片' }
             ]
+        }
+    },
+    computed: {
+        modeNote() {
+            return this.mode === 'raster'
+                ? '將每頁重新轉為影像，對掃描檔或大量圖片的 PDF 能大幅縮小，但文字會變成圖片、無法再被選取。'
+                : '重新整理並壓縮 PDF 內部結構，保留可選取的文字與向量內容，適合一般文件。'
         }
     },
     methods: {
@@ -198,13 +207,6 @@ export default {
                 this.pageCount = 0
             }
         },
-        selectLevel(value) {
-            const level = this.levels.find(l => l.value === value)
-            if (!level) return
-            this.selectedLevel = value
-            this.scale = level.scale
-            this.quality = level.quality
-        },
         onQualityInput(e) {
             this.quality = Number(e.target.value) / 100
         },
@@ -214,61 +216,88 @@ export default {
             this.progress = 0
 
             try {
-                const buf = await this.file.arrayBuffer()
-                const pdf = await pdfjsLib.getDocument({ data: buf }).promise
-                const total = pdf.numPages
-                let doc = null
+                const originalBytes = new Uint8Array(await this.file.arrayBuffer())
+                const originalSize = this.file.size
 
-                for (let i = 1; i <= total; i++) {
-                    const page = await pdf.getPage(i)
-                    const viewport = page.getViewport({ scale: this.scale })
-                    const base = page.getViewport({ scale: 1 })
+                const candidate = this.mode === 'raster'
+                    ? await this.rasterizeCompress(originalBytes)
+                    : await this.losslessCompress(originalBytes)
 
-                    const canvas = document.createElement('canvas')
-                    canvas.width = Math.max(1, Math.floor(viewport.width))
-                    canvas.height = Math.max(1, Math.floor(viewport.height))
-                    const ctx = canvas.getContext('2d')
-                    ctx.fillStyle = '#ffffff'
-                    ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-                    await page.render({ canvasContext: ctx, viewport }).promise
-                    const imgData = canvas.toDataURL('image/jpeg', this.quality)
-
-                    const orientation = base.width > base.height ? 'l' : 'p'
-                    if (i === 1) {
-                        doc = new jsPDF({ orientation, unit: 'pt', format: [base.width, base.height] })
-                    } else {
-                        doc.addPage([base.width, base.height], orientation)
-                    }
-                    doc.addImage(imgData, 'JPEG', 0, 0, base.width, base.height, undefined, 'FAST')
-
-                    page.cleanup()
-                    canvas.width = 0
-                    canvas.height = 0
-
-                    this.progress = Math.round((i / total) * 100)
-                    // 讓畫面有機會重繪進度
-                    await new Promise(r => setTimeout(r, 0))
+                // 核心保證：壓縮後絕不大於原檔，否則保留原檔
+                let finalBytes = originalBytes
+                let finalSize = originalSize
+                if (candidate && candidate.size < originalSize) {
+                    finalBytes = candidate.bytes
+                    finalSize = candidate.size
                 }
 
-                pdf.destroy()
-
-                const blob = doc.output('blob')
-                const saved = this.file.size - blob.size
+                const blob = new Blob([finalBytes], { type: 'application/pdf' })
+                const saved = originalSize - finalSize
                 this.result = {
                     blob,
-                    originalSize: this.file.size,
-                    compressedSize: blob.size,
+                    originalSize,
+                    compressedSize: finalSize,
                     saved,
-                    savedPercent: saved > 0 ? Math.round((saved / this.file.size) * 100) : 0
+                    savedPercent: saved > 0 ? Math.round((saved / originalSize) * 100) : 0
                 }
-                this.showToast('壓縮完成', 'success')
+                this.showToast(saved > 0 ? '壓縮完成' : '此檔案已無法再縮小，已保留原檔', saved > 0 ? 'success' : 'info')
             } catch (err) {
                 console.error('PDF compress error:', err)
                 this.showToast('壓縮失敗，可能是受密碼保護或損毀的 PDF', 'error')
             } finally {
                 this.isCompressing = false
             }
+        },
+        // 無損：以 pdf-lib 重整並啟用物件串流壓縮，保留文字與向量
+        async losslessCompress(bytes) {
+            const doc = await PDFDocument.load(bytes, { updateMetadata: false })
+            const out = await doc.save({ useObjectStreams: true, addDefaultPage: false })
+            this.progress = 100
+            return { bytes: out, size: out.length }
+        },
+        // 強力：逐頁點陣化為 JPEG 後以 jsPDF 重建
+        async rasterizeCompress(bytes) {
+            // 傳入副本，避免 pdf.js 分離（detach）原始 buffer
+            const pdf = await pdfjsLib.getDocument({ data: bytes.slice() }).promise
+            const total = pdf.numPages
+            let doc = null
+
+            for (let i = 1; i <= total; i++) {
+                const page = await pdf.getPage(i)
+                const viewport = page.getViewport({ scale: this.scale })
+                const base = page.getViewport({ scale: 1 })
+
+                const canvas = document.createElement('canvas')
+                canvas.width = Math.max(1, Math.floor(viewport.width))
+                canvas.height = Math.max(1, Math.floor(viewport.height))
+                const ctx = canvas.getContext('2d')
+                ctx.fillStyle = '#ffffff'
+                ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+                await page.render({ canvasContext: ctx, viewport }).promise
+                const imgData = canvas.toDataURL('image/jpeg', this.quality)
+
+                const orientation = base.width > base.height ? 'l' : 'p'
+                if (i === 1) {
+                    doc = new jsPDF({ orientation, unit: 'pt', format: [base.width, base.height] })
+                } else {
+                    doc.addPage([base.width, base.height], orientation)
+                }
+                doc.addImage(imgData, 'JPEG', 0, 0, base.width, base.height, undefined, 'FAST')
+
+                page.cleanup()
+                canvas.width = 0
+                canvas.height = 0
+
+                this.progress = Math.round((i / total) * 100)
+                // 讓畫面有機會重繪進度
+                await new Promise(r => setTimeout(r, 0))
+            }
+
+            pdf.destroy()
+
+            const out = new Uint8Array(doc.output('arraybuffer'))
+            return { bytes: out, size: out.length }
         },
         download() {
             if (!this.result) return
@@ -279,7 +308,7 @@ export default {
             link.href = url
             link.click()
             URL.revokeObjectURL(url)
-            this.showToast('已下載壓縮後 PDF', 'success')
+            this.showToast('已下載 PDF', 'success')
         },
         reset() {
             this.file = null
@@ -494,7 +523,7 @@ export default {
 
 .level-group {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.5rem;
 }
 
@@ -583,6 +612,11 @@ export default {
     color: #718096;
     line-height: 1.5;
     text-align: left;
+}
+
+.settings-note.guarantee {
+    margin-top: 0.4rem;
+    color: #68d391;
 }
 
 /* 動作區 */
@@ -674,8 +708,8 @@ export default {
 }
 
 .result-badge.warn {
-    background-color: rgba(229, 62, 62, 0.12);
-    color: #fc8181;
+    background-color: rgba(66, 153, 225, 0.12);
+    color: #90cdf4;
     font-weight: normal;
     font-size: 0.82rem;
 }

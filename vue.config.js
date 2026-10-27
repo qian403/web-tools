@@ -42,7 +42,7 @@ module.exports = defineConfig({
           },
           pdf: {
             name: 'chunk-pdf',
-            test: /[\\/]node_modules[\\/](pdfjs-dist|jspdf)[\\/]/,
+            test: /[\\/]node_modules[\\/](pdfjs-dist|jspdf|pdf-lib)[\\/]/,
             priority: 20
           },
           common: {
